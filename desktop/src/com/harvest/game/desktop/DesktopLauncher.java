@@ -9,4 +9,5 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		new LwjglApplication(new GameDriver(), config);
 	}
+	//Aldone wuz hur
 }
