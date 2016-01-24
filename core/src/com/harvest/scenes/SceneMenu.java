@@ -2,6 +2,7 @@ package com.harvest.scenes;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -20,6 +21,7 @@ public class SceneMenu implements Screen{
     Stage stage;
     PlayerOverWorld player;
     Image background;
+    Sound bgMusic;
 
 
     public SceneMenu(GameDriver game){
@@ -30,6 +32,9 @@ public class SceneMenu implements Screen{
         stage.addActor(background);
         player = new PlayerOverWorld();
         stage.addActor(player);
+        bgMusic = Gdx.audio.newSound(Gdx.files.internal("04-spring-theme.mp3"));
+        bgMusic.play(.5f);
+        bgMusic.loop(.5f);
     }
 
     @Override
@@ -71,6 +76,6 @@ public class SceneMenu implements Screen{
 
     @Override
     public void dispose() {
-
+        bgMusic.dispose();
     }
 }
