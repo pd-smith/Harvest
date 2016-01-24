@@ -1,16 +1,14 @@
 package com.harvest.actors;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.harvest.input_listeners.PlayerOverWorldListener;
 
 /**
  * Created by Patty on 1/23/2016.
@@ -18,14 +16,15 @@ import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 public class PlayerOverWorld extends Actor {
     private static final int FRAME_COLS = 12;
     private static final int FRAME_ROWS = 8;
-
     private static final int FRAME_LENGTH = 3;
+    private static final float ANIM_SPEED = .30f;
+    private static final float WALK_AMOUNT = 3f;
+
 
     Animation animNorth;
     Animation animSouth;
     Animation animWest;
     Animation animEast;
-
     Animation animCurr;
 
     Texture sheet;
@@ -34,14 +33,103 @@ public class PlayerOverWorld extends Actor {
     TextureRegion[] walkingWest;
     TextureRegion[] walkingEast;
 
-    SpriteBatch batch;
     TextureRegion currentFrame;
 
+
+    boolean isMoving;
     float stateTime;
 
     public PlayerOverWorld(){
+        isMoving = false;
+
+        setUpAnimations();
+
+        setBounds(0,0,currentFrame.getRegionWidth(),currentFrame.getRegionHeight());
+        addListener((EventListener) new PlayerOverWorldListener(this));
 
 
+
+
+
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        if(isMoving){
+            addActionAsNeeded();
+            stateTime += Gdx.graphics.getDeltaTime();
+            currentFrame = animCurr.getKeyFrame(stateTime, true);
+        }
+        batch.draw(currentFrame, this.getX(), this.getY());
+    }
+
+    @Override
+    public Actor hit(float arg0, float arg1, boolean flag) {
+        return super.hit(arg0, arg1, flag);
+    }
+
+    public void moveNorth(){
+        isMoving = true;
+        animCurr = animNorth;
+    }
+
+    public void moveSouth(){
+        isMoving = true;
+        animCurr = animSouth;
+    }
+
+    public void moveWest(){
+        isMoving = true;
+        animCurr = animWest;
+    }
+
+    public void moveEast(){
+        isMoving = true;
+        animCurr = animEast;
+    }
+
+    public void stopMovement(){
+        isMoving = false;
+        switch(getDirection()){
+            case 0:
+                currentFrame = animNorth.getKeyFrame(1);
+                break;
+            case 1:
+                currentFrame = animEast.getKeyFrame(1);
+                break;
+            case 2:
+                currentFrame = animSouth.getKeyFrame(1);
+                break;
+            case 3:
+                currentFrame = animWest.getKeyFrame(1);
+                break;
+            default:
+                System.err.print("Couldn't find correct animation");
+                break;
+        }
+        stateTime = 0;
+    }
+
+    public int getDirection(){
+        if(animCurr == animNorth){
+            return 0;
+        }else if(animCurr == animSouth){
+            return 2;
+        }else if(animCurr == animWest){
+            return 3;
+        }else if(animCurr == animEast){
+            return 1;
+        }else{
+            return -1;
+        }
+    }
+
+    private void setUpAnimations(){
         sheet = new Texture(Gdx.files.internal("testsheet.png"));
         TextureRegion[][] tmp = TextureRegion.split(sheet, sheet.getWidth()/FRAME_COLS, sheet.getHeight()/FRAME_ROWS);
         walkingNorth = new TextureRegion[FRAME_LENGTH];
@@ -63,52 +151,42 @@ public class PlayerOverWorld extends Actor {
 
 
 
-        animNorth = new Animation(.4f, walkingNorth);
+        animNorth = new Animation(ANIM_SPEED, walkingNorth);
         animNorth.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
-        animSouth = new Animation(.4f, walkingSouth);
+        animSouth = new Animation(ANIM_SPEED, walkingSouth);
         animSouth.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
-        animWest = new Animation(.4f, walkingWest);
+        animWest = new Animation(ANIM_SPEED, walkingWest);
         animWest.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
-        animEast = new Animation(.4f, walkingEast);
+        animEast = new Animation(ANIM_SPEED, walkingEast);
         animEast.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         stateTime = 0f;
         animCurr = animSouth;
 
-        currentFrame = animCurr.getKeyFrame(stateTime, true);
-
-        addListener(new InputListener(){
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                switch(keycode){
-                    case Input.Keys.A:
-                        System.out.println(true);
-                        animCurr = animWest;
-                        break;
-                    case Input.Keys.D:
-                        animCurr = animEast;
-                        break;
-                    case Input.Keys.W:
-                        animCurr = animSouth;
-                        break;
-                    case Input.Keys.S:
-                        animCurr = animNorth;
-                        break;
-                }
-                return true;
-            }
-        });
-        setBounds(0,0,currentFrame.getRegionWidth(),currentFrame.getRegionHeight());
+        currentFrame = animCurr.getKeyFrame(1);
     }
 
-    @Override
-    public void act(float delta) {
-        super.act(delta);
+    private boolean addActionAsNeeded(){
+        /*if(animCurr.getKeyFrameIndex(stateTime)%2 != 0){
+            return false;
+        }*/
+        switch (getDirection()){
+            case 0:
+                this.addAction(Actions.moveTo(this.getX(),this.getY() + WALK_AMOUNT,ANIM_SPEED/2));
+                break;
+            case 1:
+                this.addAction(Actions.moveTo(this.getX()+ WALK_AMOUNT,this.getY(),ANIM_SPEED/2));
+                break;
+            case 2:
+                this.addAction(Actions.moveTo(this.getX(),this.getY() - WALK_AMOUNT,ANIM_SPEED/2));
+                break;
+            case 3:
+                this.addAction(Actions.moveTo(this.getX() - WALK_AMOUNT,this.getY(),ANIM_SPEED/2));
+                break;
+            default:
+                System.err.println("Failed to add action. Direction not Recognized!");
+                break;
+        }
+        return true;
     }
 
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        stateTime += Gdx.graphics.getDeltaTime();
-        currentFrame = animCurr.getKeyFrame(stateTime, true);
-        batch.draw(currentFrame, 50, 50);
-    }
 }
