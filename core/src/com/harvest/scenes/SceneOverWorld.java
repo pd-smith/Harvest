@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.harvest.actors.PlayerOverWorld;
+import com.harvest.environment.overworld.Map;
 import com.harvest.environment.overworld.Rock;
 import com.harvest.game.GameDriver;
 
@@ -31,17 +32,19 @@ public class SceneOverWorld implements Screen{
     Sound bgMusic;
     public World world;
     Box2DDebugRenderer debugRenderer;
-    TiledMap map;
+    Map map;
 
     public SceneOverWorld(GameDriver game){
         _game = game;
         world = new World(new Vector2(), true);
         stage = new Stage(_game.viewport);
         Gdx.input.setInputProcessor(stage);
-        background = new Image(new Texture(Gdx.files.internal("farm.png")));
-        stage.addActor(background);
+        //background = new Image(new Texture(Gdx.files.internal("farm.png")));
+        //stage.addActor(background);
         player = new PlayerOverWorld(this);
         //stage.addActor(new Rock(this));
+        player.setX(500f);
+        player.setY(1400f);
         stage.addActor(player);
 
         bgMusic = Gdx.audio.newSound(Gdx.files.internal("04-spring-theme.mp3"));
@@ -49,9 +52,7 @@ public class SceneOverWorld implements Screen{
         bgMusic.loop(.5f);
         debugRenderer = new Box2DDebugRenderer();
 
-        //map = new TmxMapLoader().load("housemap.tmx");
-        //float unitScale = 1 / 16f;
-        //OrthogonalTiledMapRenderer renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+        map = new Map("housemap.tmx");
 
     }
 
@@ -66,8 +67,14 @@ public class SceneOverWorld implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         world.step(1/60f, 6, 2);
 
+        map.getRenderer().setView(_game.cam);
+        map.getRenderer().render();
+
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+
+
+
         debugRenderer.render(world, _game.debugCam.combined);
         _game.debugCam.update();
         _game.cam.position.set(player.getX(),player.getY(),0);

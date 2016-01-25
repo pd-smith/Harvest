@@ -23,7 +23,7 @@ public class PlayerOverWorld extends Actor {
     private static final int FRAME_ROWS = 8;
     private static final int FRAME_LENGTH = 3;
     private static final float ANIM_SPEED = .30f;
-    private static final float WALK_AMOUNT = 3f;
+    private static final float WALK_AMOUNT = 8f;
 
 
     Animation animNorth;
