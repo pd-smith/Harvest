@@ -41,7 +41,7 @@ public class SceneOverWorld implements Screen{
         background = new Image(new Texture(Gdx.files.internal("farm.png")));
         stage.addActor(background);
         player = new PlayerOverWorld(this);
-        stage.addActor(new Rock(this));
+        //stage.addActor(new Rock(this));
         stage.addActor(player);
 
         bgMusic = Gdx.audio.newSound(Gdx.files.internal("04-spring-theme.mp3"));
@@ -49,9 +49,9 @@ public class SceneOverWorld implements Screen{
         bgMusic.loop(.5f);
         debugRenderer = new Box2DDebugRenderer();
 
-        map = new TmxMapLoader().load("housemap.tmx");
-        float unitScale = 1 / 16f;
-        OrthogonalTiledMapRenderer renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+        //map = new TmxMapLoader().load("housemap.tmx");
+        //float unitScale = 1 / 16f;
+        //OrthogonalTiledMapRenderer renderer = new OrthogonalTiledMapRenderer(map, unitScale);
 
     }
 
