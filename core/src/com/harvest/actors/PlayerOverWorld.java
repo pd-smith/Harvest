@@ -1,14 +1,19 @@
 package com.harvest.actors;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.harvest.input_listeners.PlayerOverWorldListener;
+import com.harvest.scenes.SceneOverWorld;
 
 /**
  * Created by Patty on 1/23/2016.
@@ -33,6 +38,8 @@ public class PlayerOverWorld extends Actor {
     TextureRegion[] walkingWest;
     TextureRegion[] walkingEast;
 
+    Rectangle body;
+
     TextureRegion currentFrame;
 
 
@@ -47,10 +54,16 @@ public class PlayerOverWorld extends Actor {
         setBounds(0,0,currentFrame.getRegionWidth(),currentFrame.getRegionHeight());
         addListener((EventListener) new PlayerOverWorldListener(this));
 
+    }
 
+    public PlayerOverWorld(SceneOverWorld scene){
+        isMoving = false;
 
+        setUpAnimations();
 
-
+        setBounds(0,0,currentFrame.getRegionWidth(),currentFrame.getRegionHeight());
+        addListener((EventListener) new PlayerOverWorldListener(this));
+        body = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
     }
 
     @Override
@@ -66,6 +79,7 @@ public class PlayerOverWorld extends Actor {
             currentFrame = animCurr.getKeyFrame(stateTime, true);
         }
         batch.draw(currentFrame, this.getX(), this.getY());
+
     }
 
     @Override
