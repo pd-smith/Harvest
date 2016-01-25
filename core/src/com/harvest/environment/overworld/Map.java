@@ -16,7 +16,15 @@ public class Map {
     TiledMap tileMap;
     TiledMapRenderer renderer;
 
-    public Map(String tilemapPath){
+    int[] backgroundLayer;
+    int[] collisionLayer;
+    int[] foregroundLayer;
+
+    public Map(String tilemapPath, int[] background, int[] collision, int[] foreground){
+        backgroundLayer = background;
+        collisionLayer = collision;
+        foregroundLayer = foreground;
+
         tileMap = new TmxMapLoader().load(tilemapPath);
         renderer = new OrthogonalTiledMapRenderer(tileMap);
     }
@@ -24,6 +32,31 @@ public class Map {
     public TiledMapRenderer getRenderer(){
         return renderer;
     }
+
+    public int[] getBackground(){
+        return backgroundLayer;
+    }
+
+    public int[] getCollision(){
+        return collisionLayer;
+    }
+
+    public int[] getForeground(){
+        return foregroundLayer;
+    }
+
+    public TiledMapTileLayer getBackgroundLayer(){
+        return (TiledMapTileLayer) tileMap.getLayers().get(backgroundLayer[0]);
+    }
+
+    public TiledMapTileLayer getCollisionLayer(){
+        return (TiledMapTileLayer) tileMap.getLayers().get(collisionLayer[0]);
+    }
+
+    public TiledMapTileLayer getForegroundLayer(){
+        return (TiledMapTileLayer) tileMap.getLayers().get(foregroundLayer[0]);
+    }
+
 
 
 }

@@ -14,7 +14,7 @@ public class GameDriver extends Game {
 	SceneOverWorld menu;
 	Texture img;
 	public OrthographicCamera cam;
-	public OrthographicCamera debugCam;
+
 	final float GAME_WIDTH = 1280;
 	final float GAME_HEIGHT = 720;
 
@@ -32,7 +32,7 @@ public class GameDriver extends Game {
 		viewport.apply();
 
 		cam.position.set(GAME_WIDTH/2,GAME_HEIGHT/2,0);
-		debugCam = new OrthographicCamera( GAME_WIDTH/2,GAME_HEIGHT/2);
+
 		//img = new Texture("badlogic.jpg");
 
 		menu = new SceneOverWorld(this);

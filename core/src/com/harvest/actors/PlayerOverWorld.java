@@ -6,12 +6,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.harvest.environment.overworld.Map;
 import com.harvest.input_listeners.PlayerOverWorldListener;
 import com.harvest.scenes.SceneOverWorld;
 
@@ -23,7 +26,7 @@ public class PlayerOverWorld extends Actor {
     private static final int FRAME_ROWS = 8;
     private static final int FRAME_LENGTH = 3;
     private static final float ANIM_SPEED = .30f;
-    private static final float WALK_AMOUNT = 8f;
+    private final float WALK_AMOUNT;
 
 
     Animation animNorth;
@@ -42,25 +45,17 @@ public class PlayerOverWorld extends Actor {
 
     TextureRegion currentFrame;
 
-
+    Map map;
     boolean isMoving;
     float stateTime;
 
-    public PlayerOverWorld(){
+
+    public PlayerOverWorld(SceneOverWorld scene, Map currentMap){
         isMoving = false;
-
         setUpAnimations();
-
-        setBounds(0,0,currentFrame.getRegionWidth(),currentFrame.getRegionHeight());
-        addListener((EventListener) new PlayerOverWorldListener(this));
-
-    }
-
-    public PlayerOverWorld(SceneOverWorld scene){
-        isMoving = false;
-
-        setUpAnimations();
-
+        map = currentMap;
+        WALK_AMOUNT = map.getCollisionLayer().getTileWidth()/2;
+        //setBounds(0,0,WALK_AMOUNT *2, WALK_AMOUNT*4);
         setBounds(0,0,currentFrame.getRegionWidth(),currentFrame.getRegionHeight());
         addListener((EventListener) new PlayerOverWorldListener(this));
         body = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
@@ -185,22 +180,69 @@ public class PlayerOverWorld extends Actor {
         }*/
         switch (getDirection()){
             case 0:
-                this.addAction(Actions.moveTo(this.getX(),this.getY() + WALK_AMOUNT,ANIM_SPEED/2));
+                if(!isBlockedNorth())
+                    this.addAction(Actions.moveTo(this.getX(),this.getY() + WALK_AMOUNT,ANIM_SPEED/2));
                 break;
             case 1:
-                this.addAction(Actions.moveTo(this.getX()+ WALK_AMOUNT,this.getY(),ANIM_SPEED/2));
+                if(!isBlockedEast())
+                    this.addAction(Actions.moveTo(this.getX()+ WALK_AMOUNT,this.getY(),ANIM_SPEED/2));
                 break;
             case 2:
-                this.addAction(Actions.moveTo(this.getX(),this.getY() - WALK_AMOUNT,ANIM_SPEED/2));
+                if(!isBlockedSouth())
+                    this.addAction(Actions.moveTo(this.getX(),this.getY() - WALK_AMOUNT,ANIM_SPEED/2));
                 break;
             case 3:
-                this.addAction(Actions.moveTo(this.getX() - WALK_AMOUNT,this.getY(),ANIM_SPEED/2));
+                if(!isBlockedWest())
+                    this.addAction(Actions.moveTo(this.getX() - WALK_AMOUNT,this.getY(),ANIM_SPEED/2));
                 break;
             default:
                 System.err.println("Failed to add action. Direction not Recognized!");
                 break;
         }
         return true;
+    }
+
+
+    private boolean isCellBlocked(float x, float y) {
+        TiledMapTileLayer collisionLayer = map.getCollisionLayer();
+        TiledMapTileLayer.Cell cell = collisionLayer.getCell((int) (x / collisionLayer.getTileWidth()), (int) (y / collisionLayer.getTileHeight()));
+        return cell != null && cell.getTile() != null;
+    }
+
+    public boolean isBlockedNorth(){
+        float increment = map.getCollisionLayer().getTileWidth();
+        increment = getWidth() < increment ? getWidth() / 2 : increment / 2;
+        for(float step = 0; step <= getWidth(); step += increment)
+            if(isCellBlocked(getX() + step, getY() + getWidth()))
+                return true;
+        return false;
+    }
+
+    public boolean isBlockedSouth(){
+        float increment = map.getCollisionLayer().getTileWidth();
+        increment = getWidth() < increment ? getWidth() / 2 : increment / 2;
+        for(float step = 0; step <= getWidth(); step += increment)
+            if(isCellBlocked(getX() + step, getY() - getWidth()/4))
+                return true;
+        return false;
+    }
+
+    public boolean isBlockedWest(){
+        float increment = map.getCollisionLayer().getTileWidth();
+        increment = getWidth() < increment ? getWidth() / 2 : increment / 2;
+        for(float step = 0; step <= getHeight()/2; step += increment)
+            if(isCellBlocked(getX(), getY() + step))
+                return true;
+        return false;
+    }
+
+    public boolean isBlockedEast(){
+        float increment = map.getCollisionLayer().getTileWidth();
+        increment = getWidth() < increment ? getWidth() / 2 : increment / 2;
+        for(float step = 0; step <= getHeight()/2; step += increment)
+            if(isCellBlocked(getX() + getWidth(), getY() + step))
+                return true;
+        return false;
     }
 
 }

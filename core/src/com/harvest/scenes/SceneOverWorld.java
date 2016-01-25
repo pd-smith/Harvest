@@ -4,19 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.harvest.actors.PlayerOverWorld;
 import com.harvest.environment.overworld.Map;
-import com.harvest.environment.overworld.Rock;
 import com.harvest.game.GameDriver;
 
 
@@ -41,18 +35,19 @@ public class SceneOverWorld implements Screen{
         Gdx.input.setInputProcessor(stage);
         //background = new Image(new Texture(Gdx.files.internal("farm.png")));
         //stage.addActor(background);
-        player = new PlayerOverWorld(this);
+        map = new Map("housemap.tmx",new int[]{0},new int[]{1},new int[]{2});
+        player = new PlayerOverWorld(this, map);
         //stage.addActor(new Rock(this));
-        player.setX(500f);
-        player.setY(1400f);
+        player.setX(512f); // multiple of tile width-1
+        player.setY(1200f);
         stage.addActor(player);
 
         bgMusic = Gdx.audio.newSound(Gdx.files.internal("04-spring-theme.mp3"));
         bgMusic.play(.5f);
         bgMusic.loop(.5f);
-        debugRenderer = new Box2DDebugRenderer();
 
-        map = new Map("housemap.tmx");
+
+
 
     }
 
@@ -65,18 +60,15 @@ public class SceneOverWorld implements Screen{
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        world.step(1/60f, 6, 2);
 
         map.getRenderer().setView(_game.cam);
-        map.getRenderer().render();
+        map.getRenderer().render(map.getBackground());
+        map.getRenderer().render(map.getCollision());
 
         stage.act(Gdx.graphics.getDeltaTime());
         stage.draw();
+        map.getRenderer().render(map.getForeground());
 
-
-
-        debugRenderer.render(world, _game.debugCam.combined);
-        _game.debugCam.update();
         _game.cam.position.set(player.getX(),player.getY(),0);
         _game.cam.update();
     }
