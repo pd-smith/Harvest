@@ -15,8 +15,9 @@ public class GameDriver extends Game {
 	Texture img;
 	public OrthographicCamera cam;
 
-	final float GAME_WIDTH = 1280;
-	final float GAME_HEIGHT = 720;
+
+	public final float GAME_WIDTH = 1280;
+	public final float GAME_HEIGHT = 720;
 
 	public Viewport viewport;
 	
@@ -26,7 +27,6 @@ public class GameDriver extends Game {
 		float h = Gdx.graphics.getHeight();
 		float w = Gdx.graphics.getWidth();
 		float aspectRatio = (h/w);
-
 		cam = new OrthographicCamera();
 		viewport = new FitViewport(GAME_WIDTH * aspectRatio,GAME_HEIGHT * aspectRatio,cam);
 		viewport.apply();

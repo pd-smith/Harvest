@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -12,6 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.harvest.actors.PlayerOverWorld;
 import com.harvest.environment.overworld.Map;
 import com.harvest.game.GameDriver;
+import com.harvest.hud_elements.OverWorldHUD;
+import com.sun.jmx.snmp.SnmpPduRequestType;
 
 
 /**
@@ -19,6 +23,8 @@ import com.harvest.game.GameDriver;
  */
 public class SceneOverWorld implements Screen{
 
+    OverWorldHUD hud;
+    SpriteBatch hudbatch;
     GameDriver _game;
     Stage stage;
     PlayerOverWorld player;
@@ -30,6 +36,7 @@ public class SceneOverWorld implements Screen{
 
     public SceneOverWorld(GameDriver game){
         _game = game;
+        hudbatch = new SpriteBatch();
         world = new World(new Vector2(), true);
         stage = new Stage(_game.viewport);
         Gdx.input.setInputProcessor(stage);
@@ -41,10 +48,13 @@ public class SceneOverWorld implements Screen{
         player.setX(512f); // multiple of tile width-1
         player.setY(1200f);
         stage.addActor(player);
-
+        //stage.addActor(new OverWorldHUD(player));
         bgMusic = Gdx.audio.newSound(Gdx.files.internal("04-spring-theme.mp3"));
         bgMusic.play(.5f);
         bgMusic.loop(.5f);
+
+        hud = new OverWorldHUD(game);
+
 
 
 
@@ -69,6 +79,11 @@ public class SceneOverWorld implements Screen{
         stage.draw();
         map.getRenderer().render(map.getForeground());
 
+        hudbatch.begin();
+        for(Sprite sprite: hud.getHudElements()){
+            hudbatch.draw(sprite,sprite.getX(),sprite.getY());
+        }
+        hudbatch.end();
         _game.cam.position.set(player.getX(),player.getY(),0);
         _game.cam.update();
     }
