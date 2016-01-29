@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.harvest.environment.overworld.Map;
+import com.harvest.hud_elements.HUDVars;
 import com.harvest.input_listeners.PlayerOverWorldListener;
 import com.harvest.scenes.SceneOverWorld;
 
@@ -195,6 +196,7 @@ public class PlayerOverWorld extends Actor {
         }
         return true;
     }
+
 
 
     private boolean isCellBlocked(float x, float y) {

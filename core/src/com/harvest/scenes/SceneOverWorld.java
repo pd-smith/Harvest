@@ -62,6 +62,12 @@ public class SceneOverWorld implements Screen{
 
     }
 
+
+
+    public void update(){
+
+    }
+
     @Override
     public void show() {
 
@@ -71,6 +77,9 @@ public class SceneOverWorld implements Screen{
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
+        hud.update();
 
         map.getRenderer().setView(_game.cam);
         map.getRenderer().render(map.getBackground());

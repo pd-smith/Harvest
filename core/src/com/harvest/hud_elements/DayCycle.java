@@ -15,7 +15,7 @@ public class DayCycle {
     public DayCycle(){
         hours = 12;
         minutes = 0;
-        position = new Vector2(100,100);
+        position = new Vector2(950,90); //needs to be mathematical later on, not just 2 'random' numbers
         font = new BitmapFont();
     }
 
