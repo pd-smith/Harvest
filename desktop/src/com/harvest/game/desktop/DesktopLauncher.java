@@ -16,5 +16,4 @@ public class DesktopLauncher {
 		System.out.println("Here");
 		new LwjglApplication(new GameDriver(), config);
 	}
-	//Aldone wuz hur
 }

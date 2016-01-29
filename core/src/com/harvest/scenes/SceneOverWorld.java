@@ -34,21 +34,22 @@ public class SceneOverWorld implements Screen{
     Box2DDebugRenderer debugRenderer;
     Map map;
 
+    //this is messy, but can only be cleaned after we solidify 'direction' of code
+
     public SceneOverWorld(GameDriver game){
         _game = game;
         hudbatch = new SpriteBatch();
         world = new World(new Vector2(), true);
         stage = new Stage(_game.viewport);
         Gdx.input.setInputProcessor(stage);
-        //background = new Image(new Texture(Gdx.files.internal("farm.png")));
-        //stage.addActor(background);
+
         map = new Map("housemap.tmx",new int[]{0},new int[]{1},new int[]{2});
         player = new PlayerOverWorld(this, map);
         //stage.addActor(new Rock(this));
         player.setX(512f); // multiple of tile width-1
         player.setY(1200f);
         stage.addActor(player);
-        //stage.addActor(new OverWorldHUD(player));
+
         bgMusic = Gdx.audio.newSound(Gdx.files.internal("04-spring-theme.mp3"));
         bgMusic.play(.5f);
         bgMusic.loop(.5f);
@@ -83,6 +84,10 @@ public class SceneOverWorld implements Screen{
         for(Sprite sprite: hud.getHudElements()){
             hudbatch.draw(sprite,sprite.getX(),sprite.getY());
         }
+        if(hud.getClock() != null){
+            hud.getClock().getFont().draw(hudbatch,hud.getClock().getCurrentTime(),hud.getClock().getPosition().x,hud.getClock().getPosition().y);
+        }
+
         hudbatch.end();
         _game.cam.position.set(player.getX(),player.getY(),0);
         _game.cam.update();

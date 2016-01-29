@@ -2,7 +2,9 @@ package com.harvest.hud_elements;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.harvest.game.GameDriver;
 
 import java.util.ArrayList;
@@ -14,10 +16,13 @@ public class OverWorldHUD{
 
     ArrayList<Sprite> hudElements;
     GameDriver game;
+    DayCycle dayCycleClock;
+
 
     public OverWorldHUD(GameDriver game){
         this.game = game;
         hudElements = new ArrayList<Sprite>();
+        dayCycleClock = new DayCycle();
         buildDefaultHUD();
     }
 
@@ -38,5 +43,9 @@ public class OverWorldHUD{
         sprite.setX(game.GAME_WIDTH - sprite.getWidth());
         sprite.setY(game.GAME_HEIGHT - sprite.getHeight());
         hudElements.add(sprite);
+    }
+
+    public DayCycle getClock() {
+        return dayCycleClock;
     }
 }

@@ -18,12 +18,7 @@ import com.harvest.scenes.SceneOverWorld;
  * Created by Patty on 1/23/2016.
  */
 public class PlayerOverWorld extends Actor {
-    private static final int FRAME_COLS = 12;
-    private static final int FRAME_ROWS = 8;
-    private static final int FRAME_LENGTH = 3;
-    private static final float ANIM_SPEED = .30f;
     private final float WALK_AMOUNT;
-
 
     Animation animNorth;
     Animation animSouth;
@@ -135,34 +130,38 @@ public class PlayerOverWorld extends Actor {
     }
 
     private void setUpAnimations(){
+
+        //Perhaps we should make this modular? Or maybe more flexable for custom sprites
+
         sheet = new Texture(Gdx.files.internal("testsheet.png"));
-        TextureRegion[][] tmp = TextureRegion.split(sheet, sheet.getWidth()/FRAME_COLS, sheet.getHeight()/FRAME_ROWS);
-        walkingNorth = new TextureRegion[FRAME_LENGTH];
+        TextureRegion[][] tmp = TextureRegion.split(sheet, sheet.getWidth()/PlayerVars.FRAME_COLS, sheet.getHeight()/PlayerVars.FRAME_ROWS);
+
+        walkingNorth = new TextureRegion[PlayerVars.FRAME_LENGTH];
         walkingNorth[0] = tmp[0][0];
         walkingNorth[1] = tmp[0][1];
         walkingNorth[2] = tmp[0][2];
-        walkingSouth = new TextureRegion[FRAME_LENGTH];
+        walkingSouth = new TextureRegion[PlayerVars.FRAME_LENGTH];
         walkingSouth[0] = tmp[2][0];
         walkingSouth[1] = tmp[2][1];
         walkingSouth[2] = tmp[2][2];
-        walkingWest = new TextureRegion[FRAME_LENGTH];
+        walkingWest = new TextureRegion[PlayerVars.FRAME_LENGTH];
         walkingWest[0] = tmp[3][0];
         walkingWest[1] = tmp[3][1];
         walkingWest[2] = tmp[3][2];
-        walkingEast = new TextureRegion[FRAME_LENGTH];
+        walkingEast = new TextureRegion[PlayerVars.FRAME_LENGTH];
         walkingEast[0] = tmp[1][0];
         walkingEast[1] = tmp[1][1];
         walkingEast[2] = tmp[1][2];
 
 
 
-        animNorth = new Animation(ANIM_SPEED, walkingNorth);
+        animNorth = new Animation(PlayerVars.ANIM_SPEED, walkingNorth);
         animNorth.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
-        animSouth = new Animation(ANIM_SPEED, walkingSouth);
+        animSouth = new Animation(PlayerVars.ANIM_SPEED, walkingSouth);
         animSouth.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
-        animWest = new Animation(ANIM_SPEED, walkingWest);
+        animWest = new Animation(PlayerVars.ANIM_SPEED, walkingWest);
         animWest.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
-        animEast = new Animation(ANIM_SPEED, walkingEast);
+        animEast = new Animation(PlayerVars.ANIM_SPEED, walkingEast);
         animEast.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
         stateTime = 0f;
         animCurr = animSouth;
@@ -171,25 +170,24 @@ public class PlayerOverWorld extends Actor {
     }
 
     private boolean addActionAsNeeded(){
-        /*if(animCurr.getKeyFrameIndex(stateTime)%2 != 0){
-            return false;
-        }*/
+
+        float walkSpeed = PlayerVars.ANIM_SPEED/2;
         switch (getDirection()){
             case 0:
                 if(!isBlockedNorth())
-                    this.addAction(Actions.moveTo(this.getX(),this.getY() + WALK_AMOUNT,ANIM_SPEED/2));
+                    this.addAction(Actions.moveTo(this.getX(),this.getY() + WALK_AMOUNT,walkSpeed));
                 break;
             case 1:
                 if(!isBlockedEast())
-                    this.addAction(Actions.moveTo(this.getX()+ WALK_AMOUNT,this.getY(),ANIM_SPEED/2));
+                    this.addAction(Actions.moveTo(this.getX()+ WALK_AMOUNT,this.getY(),walkSpeed));
                 break;
             case 2:
                 if(!isBlockedSouth())
-                    this.addAction(Actions.moveTo(this.getX(),this.getY() - WALK_AMOUNT,ANIM_SPEED/2));
+                    this.addAction(Actions.moveTo(this.getX(),this.getY() - WALK_AMOUNT,walkSpeed));
                 break;
             case 3:
                 if(!isBlockedWest())
-                    this.addAction(Actions.moveTo(this.getX() - WALK_AMOUNT,this.getY(),ANIM_SPEED/2));
+                    this.addAction(Actions.moveTo(this.getX() - WALK_AMOUNT,this.getY(),walkSpeed));
                 break;
             default:
                 System.err.println("Failed to add action. Direction not Recognized!");

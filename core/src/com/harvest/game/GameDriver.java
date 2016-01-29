@@ -32,9 +32,6 @@ public class GameDriver extends Game {
 		viewport.apply();
 
 		cam.position.set(GAME_WIDTH/2,GAME_HEIGHT/2,0);
-
-		//img = new Texture("badlogic.jpg");
-
 		menu = new SceneOverWorld(this);
 
 
