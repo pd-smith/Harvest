@@ -95,6 +95,12 @@ public class SceneOverWorld implements Screen{
         }
         if(hud.getClock() != null){
             hud.getClock().getFont().draw(hudbatch,hud.getClock().getCurrentTime(),hud.getClock().getPosition().x,hud.getClock().getPosition().y);
+            hud.getClock().getFont().draw(hudbatch,hud.getClock().getTimeOfDay(),hud.getClock().getPosition().x + 75,hud.getClock().getPosition().y);
+
+            hud.getClock().getFont().draw(hudbatch,hud.getClock().getMonthName(),hud.getClock().getPosition().x,hud.getClock().getPosition().y+12);
+            hud.getClock().getFont().draw(hudbatch,hud.getClock().getDay() + "" ,hud.getClock().getPosition().x + 45,hud.getClock().getPosition().y+12);
+            hud.getClock().getFont().draw(hudbatch,hud.getClock().getDayOfWeek(),hud.getClock().getPosition().x + 75,hud.getClock().getPosition().y+12);
+
         }
 
         hudbatch.end();
