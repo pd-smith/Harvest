@@ -12,17 +12,22 @@ import com.harvest.scenes.SceneOverWorld;
 /**
  * Created by Patty on 1/24/2016.
  */
-public class Rock extends Actor {
+public class NextSceneCollider extends Actor {
 
     Sprite sprite;
     Body body;
+    short transitionID;
 
-    public Rock(SceneOverWorld scene){
-        sprite = new Sprite(new Texture(Gdx.files.internal(EnvironmentVars.ROCK_IMG_PATH)));
+    //What this class should do is on collision with Player, facilitate the loading of a given
+    //Area based on the input id
+
+    public NextSceneCollider(SceneOverWorld scene, short id){
+        sprite = new Sprite(new Texture(Gdx.files.internal(EnvironmentVars.TRANS_IMG_PATH)));
         sprite.setPosition(this.getX(),this.getY());
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
         bodyDef.position.set(this.getX(), this.getY());
+        transitionID = id;
         body = scene.world.createBody(bodyDef);
     }
 

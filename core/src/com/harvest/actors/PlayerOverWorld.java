@@ -48,7 +48,9 @@ public class PlayerOverWorld extends Actor {
         map = currentMap;
         WALK_AMOUNT = map.getCollisionLayer().getTileWidth()/2;
         //setBounds(0,0,WALK_AMOUNT *2, WALK_AMOUNT*4);
-        setBounds(0,0,currentFrame.getRegionWidth(),currentFrame.getRegionHeight());
+        //setBounds(0,0,currentFrame.getRegionWidth(),currentFrame.getRegionHeight());
+        setBounds(0,0,16,currentFrame.getRegionHeight());
+        System.out.println(currentFrame.getRegionWidth() + " " + currentFrame.getRegionHeight());
         addListener((EventListener) new PlayerOverWorldListener(this));
         body = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
     }
@@ -206,26 +208,26 @@ public class PlayerOverWorld extends Actor {
     }
 
     public boolean isBlockedNorth(){
-        float increment = map.getCollisionLayer().getTileWidth();
-        increment = getWidth() < increment ? getWidth() / 2 : increment / 2;
-        for(float step = 0; step <= getWidth(); step += increment)
+        float increment = WALK_AMOUNT;
+        //increment = getHeight() < increment ? getHeight() / 2 : increment / 2;
+        for(float step = 0; step <= getWidth()-getWidth()/4; step += increment)
             if(isCellBlocked(getX() + step, getY() + getWidth()))
                 return true;
         return false;
     }
 
     public boolean isBlockedSouth(){
-        float increment = map.getCollisionLayer().getTileWidth();
-        increment = getWidth() < increment ? getWidth() / 2 : increment / 2;
-        for(float step = 0; step <= getWidth(); step += increment)
-            if(isCellBlocked(getX() + step, getY() - getWidth()/4))
+        float increment = WALK_AMOUNT;
+        //increment = getWidth() < increment ? getWidth() / 2 : increment / 2;
+        for(float step = 0; step <= getWidth()-getWidth()/4; step += increment)
+            if(isCellBlocked(getX() + step, getY()))
                 return true;
         return false;
     }
 
     public boolean isBlockedWest(){
-        float increment = map.getCollisionLayer().getTileWidth();
-        increment = getWidth() < increment ? getWidth() / 2 : increment / 2;
+        float increment = WALK_AMOUNT;
+        //increment = getWidth() < increment ? getWidth() / 2 : increment / 2;
         for(float step = 0; step <= getHeight()/2; step += increment)
             if(isCellBlocked(getX(), getY() + step))
                 return true;
@@ -233,8 +235,8 @@ public class PlayerOverWorld extends Actor {
     }
 
     public boolean isBlockedEast(){
-        float increment = map.getCollisionLayer().getTileWidth();
-        increment = getWidth() < increment ? getWidth() / 2 : increment / 2;
+        float increment = WALK_AMOUNT;
+        //increment = getWidth() < increment ? getWidth() / 2 : increment / 2;
         for(float step = 0; step <= getHeight()/2; step += increment)
             if(isCellBlocked(getX() + getWidth(), getY() + step))
                 return true;
