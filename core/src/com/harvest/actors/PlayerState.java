@@ -1,5 +1,8 @@
 package com.harvest.actors;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.Vector2;
+
 /**
  * Created by Patty on 2/1/2016.
  */
@@ -8,8 +11,14 @@ public class PlayerState {
     int maxCarry, maxFatigue, curFatigue, strength, endurance, intelligence, charm;
     String name;
 
+    BitmapFont font; //replace with more elegant solution later
+    Vector2 position;
+
+    Inventory inventory;
+    Wallet wallet;
+
     public PlayerState(String playerName){
-        name = playerName;
+        name = playerName; //TODO: cleanup player names
 
         maxCarry = 5; // have to figure out what this is tied to (stats or equips)
 
@@ -20,6 +29,12 @@ public class PlayerState {
         endurance = PlayerVars.STAT_START_VALUE;
         intelligence = PlayerVars.STAT_START_VALUE;
         charm = PlayerVars.STAT_START_VALUE;
+
+        inventory = new Inventory(this);
+        wallet = new Wallet(PlayerVars.STARTING_MONEY_DOLLARS * PlayerVars.CASH_VALUE);
+        font = new BitmapFont();
+
+        position = new Vector2(210,585); // just guessing until i get the correct place. Replace
     }
 
     /**
@@ -105,5 +120,21 @@ public class PlayerState {
 
     public int getCharm(){
         return charm;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public Wallet getWallet(){
+        return wallet;
+    }
+
+    public BitmapFont getFont(){
+        return font;
+    }
+
+    public Vector2 getPosition(){
+        return position;
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -12,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.harvest.actors.PlayerOverWorld;
+import com.harvest.actors.PlayerState;
 import com.harvest.environment.overworld.Map;
 import com.harvest.game.GameDriver;
 import com.harvest.hud_elements.OverWorldHUD;
@@ -93,6 +95,20 @@ public class SceneOverWorld implements Screen{
         for(Sprite sprite: hud.getHudElements()){
             hudbatch.draw(sprite,sprite.getX(),sprite.getY());
         }
+
+        //replace after
+        BitmapFont statFont;
+        if((statFont = player.getPlayerState().getFont()) != null){
+            PlayerState tempState = player.getPlayerState();
+            float xPad = 100, yPad = -50;
+            statFont.draw(hudbatch, tempState.getName(),tempState.getPosition().x + xPad,tempState.getPosition().y);
+            statFont.draw(hudbatch, "Strength: " + tempState.getStrength(), tempState.getPosition().x,tempState.getPosition().y + yPad);
+            statFont.draw(hudbatch, "Endurance: " + tempState.getEndurance(), tempState.getPosition().x,tempState.getPosition().y + yPad*2);
+            statFont.draw(hudbatch, "Intelligence: " + tempState.getIntelligence(), tempState.getPosition().x ,tempState.getPosition().y + yPad*3);
+            statFont.draw(hudbatch, "Charm: " + tempState.getCharm(), tempState.getPosition().x,tempState.getPosition().y + yPad*4);
+            statFont.draw(hudbatch, tempState.getWallet().getWalletAmount(), tempState.getPosition().x + xPad,tempState.getPosition().y + yPad*6);
+        }
+
         if(hud.getClock() != null){
             hud.getClock().getFont().draw(hudbatch,hud.getClock().getCurrentTime(),hud.getClock().getPosition().x,hud.getClock().getPosition().y);
             hud.getClock().getFont().draw(hudbatch,hud.getClock().getTimeOfDay(),hud.getClock().getPosition().x + 75,hud.getClock().getPosition().y);

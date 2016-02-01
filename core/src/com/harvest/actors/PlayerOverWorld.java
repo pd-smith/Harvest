@@ -41,18 +41,21 @@ public class PlayerOverWorld extends Actor {
     boolean isMoving;
     float stateTime;
 
+    PlayerState playerState;
+
 
     public PlayerOverWorld(SceneOverWorld scene, Map currentMap){
         isMoving = false;
         setUpAnimations();
         map = currentMap;
         WALK_AMOUNT = map.getCollisionLayer().getTileWidth()/2;
-        //setBounds(0,0,WALK_AMOUNT *2, WALK_AMOUNT*4);
-        //setBounds(0,0,currentFrame.getRegionWidth(),currentFrame.getRegionHeight());
+
         setBounds(0,0,16,currentFrame.getRegionHeight());
         System.out.println(currentFrame.getRegionWidth() + " " + currentFrame.getRegionHeight());
-        addListener((EventListener) new PlayerOverWorldListener(this));
+        addListener(new PlayerOverWorldListener(this));
         body = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+
+        playerState = new PlayerState("Someone");
     }
 
     @Override
@@ -241,6 +244,10 @@ public class PlayerOverWorld extends Actor {
             if(isCellBlocked(getX() + getWidth(), getY() + step))
                 return true;
         return false;
+    }
+
+    public PlayerState getPlayerState(){
+        return playerState;
     }
 
 }
