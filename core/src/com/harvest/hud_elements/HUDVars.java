@@ -4,7 +4,7 @@ package com.harvest.hud_elements;
  * Created by Patty on 1/29/16.
  */
 public class HUDVars {
-    public static final int CLOCK_UPDATE = 60;
+    public static final int CLOCK_UPDATE = 1;
     public static final int MORNING_START = 6;
     public static final int AFTERNOON_START = 11;
     public static final int EVENING_START = 16;

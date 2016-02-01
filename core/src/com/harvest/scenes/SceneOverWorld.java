@@ -51,8 +51,8 @@ public class SceneOverWorld implements Screen{
         stage.addActor(player);
 
         bgMusic = Gdx.audio.newSound(Gdx.files.internal("04-spring-theme.mp3"));
-        bgMusic.play(.5f);
-        bgMusic.loop(.5f);
+        //bgMusic.play(.5f);
+        //bgMusic.loop(.5f);
 
         hud = new OverWorldHUD(game);
 

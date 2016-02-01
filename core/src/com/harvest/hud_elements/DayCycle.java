@@ -15,8 +15,8 @@ public class DayCycle {
     public DayCycle(){
         hours = 12;
         minutes = 0;
-        month = 11;
-        day = 10;
+        month = 12;
+        day = 31;
         weekDayID = 0;
         position = new Vector2(900,25); //needs to be mathematical later on, not just 2 'random' numbers
         font = new BitmapFont();
