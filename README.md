@@ -44,4 +44,25 @@ Harvest Moon clone using libGDX
 * Check email/bank (mechanic to stop fraud)
 
 
+### Artwork
+
+##### Characters
+* Main character sprite sheet Overworld/Dialogue
+* Townspeople OverWorld/Dialogue
+* Workmates Overworld/Dialogue
+* Romantic Interests Overworld/Dialogue
+
+##### Map
+* Tilesets for everyzone (City, Suburb, Farm)
+* Environment Effects (Time of Day, Inclement Weather)
+* Spawn location for some items (Farm mostly)
+
+##### HUD
+* Clock and Weather indicators
+* Dialogue Boxes
+* Cell phone(?)
+* Other(?)
+
+
+
 (list WIP)
