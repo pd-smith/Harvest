@@ -5,13 +5,16 @@ Harvest Moon clone using libGDX
 ## RoadMap
 
 ### Gameplay
+##### Basic Functions
+* Character Stats
+* Inventory
+* Saving
+* Pausing
+
 #####   Areas
 * Transition
 * Overall Layout
 * Tileset
-* Character Stats
-* Inventory
-* Saving
 
 #####   Dialogue
 * HUD popups
