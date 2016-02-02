@@ -1,6 +1,13 @@
 # Harvest
 Harvest Moon clone using libGDX
 
+## Install Instructions (IntelliJ)
+- Clone Project
+- Open build.gradle
+- Run the main in desktop/src/com.harvest.game.desktop/DesktopLauncher.java
+- Go to Run->Edit Configurations
+- Navigate to Application->DesktopLauncher
+- Under Configuration change the 'Working Directory' to <your path>/Harvest/core/assets
 
 ## RoadMap
 
