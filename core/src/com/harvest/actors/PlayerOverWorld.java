@@ -140,7 +140,7 @@ public class PlayerOverWorld extends Actor {
 
         //Perhaps we should make this modular? Or maybe more flexable for custom sprites
 
-        sheet = new Texture(Gdx.files.internal("testsheet.png"));
+        sheet = new Texture(Gdx.files.internal("Characters/testsheet.png"));
         TextureRegion[][] tmp = TextureRegion.split(sheet, sheet.getWidth()/PlayerVars.FRAME_COLS, sheet.getHeight()/PlayerVars.FRAME_ROWS);
 
         walkingNorth = new TextureRegion[PlayerVars.FRAME_LENGTH];

@@ -1,6 +1,6 @@
 package com.harvest.hud_elements;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -10,6 +10,7 @@ public class DayCycle {
 
     int hours, minutes, day, month, weekDayID;
     Vector2 position;
+    Texture morningTint,afternoonTint,eveningTint,nightTint;
 
     public DayCycle(){
         hours = 12;
@@ -18,6 +19,11 @@ public class DayCycle {
         day = 31;
         weekDayID = 0;
         position = new Vector2(900,25); //needs to be mathematical later on, not just 2 'random' numbers
+
+        morningTint = new Texture(HUDVars.OVERLAY_MORNING_PATH);
+        afternoonTint = new Texture(HUDVars.OVERLAY_AFTERNOON_PATH);
+        eveningTint = new Texture(HUDVars.OVERLAY_EVENING_PATH);
+        nightTint = new Texture(HUDVars.OVERLAY_NIGHT_PATH);
     }
 
     public DayCycle(int currentHours, int currentMinutes, int currentMonth, int currentDay, int currentDayOfWeek){
@@ -127,6 +133,19 @@ public class DayCycle {
 
     public String getDayOfWeek(){
         return HUDVars.WEEK_DAY_NAME[weekDayID];
+    }
+
+    public Texture getTimeOfDayTint(){
+        if(isMorning()){
+            return morningTint;
+        }
+        if(isAfternoon()){
+            return afternoonTint;
+        }
+        if(isEvening()){
+            return eveningTint;
+        }
+        return nightTint;
     }
 
 }

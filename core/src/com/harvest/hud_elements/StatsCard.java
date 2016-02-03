@@ -14,16 +14,20 @@ public class StatsCard {
     Sprite card;
 
     public StatsCard(){
-        int topLeft = 210,topCeiling = 585, statSpacingY = -50;
+        int screenHeight = 720, screenWidth = 1280;
+        int nameLeft = 80,nameCeiling = 630;
+        int statSpacingY = -25, statPaddingX = 900, statPaddingY = -500;
+
+
         show = false;
-        card = new Sprite(new Texture(Gdx.files.internal("Stats_HUD.png")));
-        pos_card = new Vector2(200,100);
-        pos_name = new Vector2(topLeft,topCeiling);
-        pos_str = new Vector2(topLeft,topCeiling + (statSpacingY));
-        pos_int = new Vector2(topLeft,topCeiling + (statSpacingY * 2));
-        pos_end = new Vector2(topLeft,topCeiling + (statSpacingY * 3));
-        pos_chm = new Vector2(topLeft,topCeiling + (statSpacingY * 4));
-        pos_mny = new Vector2(topLeft,topCeiling + (statSpacingY * 6));
+        card = new Sprite(new Texture(Gdx.files.internal(HUDVars.STATS_OVERLAY_PATH)));
+        pos_card = new Vector2(0,0);
+        pos_name = new Vector2(nameLeft,nameCeiling);
+        pos_str = new Vector2(statPaddingX,screenHeight + (statSpacingY) + statPaddingY);
+        pos_int = new Vector2(statPaddingX,screenHeight + (statSpacingY * 2) + statPaddingY);
+        pos_end = new Vector2(statPaddingX,screenHeight + (statSpacingY * 3) + statPaddingY);
+        pos_chm = new Vector2(statPaddingX,screenHeight + (statSpacingY * 4) + statPaddingY);
+        pos_mny = new Vector2(statPaddingX,screenHeight + (statSpacingY * 6) + statPaddingY);
 
         card.setPosition(pos_card.x,pos_card.y);
 

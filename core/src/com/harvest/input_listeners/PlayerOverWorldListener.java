@@ -35,52 +35,73 @@ public class PlayerOverWorldListener implements InputProcessor, EventListener{
             case Input.Keys.LEFT:
             case Input.Keys.A:
                 if(!_hud.getStatsCard().canShow()) {
-                    _player.moveWest();
-                    movingWest = true;
-                    movingEast = false;
-                    movingSouth = false;
-                    movingNorth = false;
+                    if (!_hud.getPauseCard().canShow()){
+                        _player.moveWest();
+                        movingWest = true;
+                        movingEast = false;
+                        movingSouth = false;
+                        movingNorth = false;
+                    }
                 }
                 break;
             case Input.Keys.RIGHT:
             case Input.Keys.D:
                 if(!_hud.getStatsCard().canShow()) {
-                    _player.moveEast();
-                    movingEast = true;
-                    movingWest = false;
-                    movingSouth = false;
-                    movingNorth = false;
+                    if (!_hud.getPauseCard().canShow()) {
+                        _player.moveEast();
+                        movingEast = true;
+                        movingWest = false;
+                        movingSouth = false;
+                        movingNorth = false;
+                    }
                 }
                 break;
             case Input.Keys.UP:
             case Input.Keys.W:
                 if(!_hud.getStatsCard().canShow()) {
-                    _player.moveNorth();
-                    movingNorth = true;
-                    movingWest = false;
-                    movingSouth = false;
-                    movingEast = false;
+                    if (!_hud.getPauseCard().canShow()) {
+                        _player.moveNorth();
+                        movingNorth = true;
+                        movingWest = false;
+                        movingSouth = false;
+                        movingEast = false;
+                    }else{
+                        _hud.getPauseCard().moveOptionsUp();
+                    }
                 }
                 break;
             case Input.Keys.DOWN:
             case Input.Keys.S:
                 if(!_hud.getStatsCard().canShow()) {
-                    _player.moveSouth();
-                    movingSouth = true;
-                    movingWest = false;
-                    movingEast = false;
-                    movingNorth = false;
+                    if (!_hud.getPauseCard().canShow()) {
+                        _player.moveSouth();
+                        movingSouth = true;
+                        movingWest = false;
+                        movingEast = false;
+                        movingNorth = false;
+                    }else{
+                        _hud.getPauseCard().moveOptionDown();
+                    }
                 }
                 break;
             case Input.Keys.ENTER:
-                if(!_hud.getStatsCard().canShow()) {
+                if(!_hud.getPauseCard().canShow() && !_hud.getStatsCard().canShow()) {
                     _hud.getStatsCard().showStats();
+                }
+                if(_hud.getPauseCard().canShow()){
+                    _hud.getPauseCard().onSelect();
                 }
                 break;
             case Input.Keys.ESCAPE:
                 if(_hud.getStatsCard().canShow()) {
                     _hud.getStatsCard().hideStats();
+                }else if(!_hud.getPauseCard().canShow()){
+                    _hud.getPauseCard().showPause();
+                }else{
+                    _hud.getPauseCard().hidePause();
                 }
+
+
                 break;
 
         }

@@ -2,9 +2,7 @@ package com.harvest.hud_elements;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
 import com.harvest.game.GameDriver;
 
 import java.util.ArrayList;
@@ -21,6 +19,7 @@ public class OverWorldHUD{
     int updateCount;
     HUDFonts fonts;
     StatsCard statsCard;
+    PauseCard pauseCard;
 
 
     public OverWorldHUD(GameDriver game){
@@ -32,6 +31,7 @@ public class OverWorldHUD{
         hideStats = true;
         fonts = new HUDFonts();
         statsCard = new StatsCard();
+        pauseCard = new PauseCard();
     }
 
     public void addElement(Sprite sprite){
@@ -45,7 +45,7 @@ public class OverWorldHUD{
     }
 
     public void buildDefaultHUD(){
-        Sprite sprite = new Sprite(new Texture(Gdx.files.internal("hud_top_right.png")));
+        Sprite sprite = new Sprite(new Texture(Gdx.files.internal(HUDVars.OVERLAY_CLOCK_BACKGROUND_PATH)));
         sprite.setX(game.GAME_WIDTH - sprite.getWidth());
         sprite.setY(0);
         hudElements.add(sprite);
@@ -72,6 +72,10 @@ public class OverWorldHUD{
 
     public StatsCard getStatsCard(){
         return statsCard;
+    }
+
+    public PauseCard getPauseCard(){
+        return pauseCard;
     }
 
 

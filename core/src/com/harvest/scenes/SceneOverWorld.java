@@ -45,7 +45,7 @@ public class SceneOverWorld implements Screen{
         stage = new Stage(_game.viewport);
         Gdx.input.setInputProcessor(stage);
 
-        map = new Map("housemap.tmx",new int[]{0},new int[]{1},new int[]{2});
+        map = new Map("Maps/Test/housemap.tmx",new int[]{0},new int[]{1},new int[]{2});
         hud = new OverWorldHUD(game);
         player = new PlayerOverWorld(this, map, hud);
         //stage.addActor(new Rock(this));
@@ -53,7 +53,7 @@ public class SceneOverWorld implements Screen{
         player.setY(1200f);
         stage.addActor(player);
 
-        bgMusic = Gdx.audio.newSound(Gdx.files.internal("04-spring-theme.mp3"));
+        bgMusic = Gdx.audio.newSound(Gdx.files.internal("Audio/Music/04-spring-theme.mp3"));
         //bgMusic.play(.5f);
         //bgMusic.loop(.5f);
 
@@ -62,7 +62,9 @@ public class SceneOverWorld implements Screen{
 
 
     public void update(){
-
+        if(!hud.getPauseCard().canShow()) {
+            hud.update();
+        }
     }
 
     @Override
@@ -75,8 +77,7 @@ public class SceneOverWorld implements Screen{
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
-        hud.update();
+        update();
 
         map.getRenderer().setView(_game.cam);
         map.getRenderer().render(map.getBackground());
@@ -87,14 +88,31 @@ public class SceneOverWorld implements Screen{
         map.getRenderer().render(map.getForeground());
 
         hudbatch.begin();
+
+        //DRAW TIME OF DAY TINT
+
+        hudbatch.draw(hud.getClock().getTimeOfDayTint(), 0, 0);
+
+        //DRAW CLOCK
         for(Sprite sprite: hud.getHudElements()){
             hudbatch.draw(sprite,sprite.getX(),sprite.getY());
         }
 
+        if(hud.getClock() != null){
+            hud.getHUDFonts().getClockFont().draw(hudbatch,hud.getClock().getCurrentTime(),hud.getClock().getPosition().x,hud.getClock().getPosition().y);
+            hud.getHUDFonts().getClockFont().draw(hudbatch,hud.getClock().getTimeOfDay(),hud.getClock().getPosition().x + 125,hud.getClock().getPosition().y);
+
+            hud.getHUDFonts().getClockFont().draw(hudbatch,hud.getClock().getMonthName(),hud.getClock().getPosition().x,hud.getClock().getPosition().y+12);
+            hud.getHUDFonts().getClockFont().draw(hudbatch,hud.getClock().getDay() + "" ,hud.getClock().getPosition().x + 45,hud.getClock().getPosition().y+12);
+            hud.getHUDFonts().getClockFont().draw(hudbatch,hud.getClock().getDayOfWeek(),hud.getClock().getPosition().x + 125,hud.getClock().getPosition().y+12);
+
+        }
+
+        //DRAW STATS CARD
         PlayerState tempState = player.getPlayerState();
         if(hud.getStatsCard().canShow()) {
             hudbatch.draw(hud.getStatsCard().getCard(), hud.getStatsCard().pos_card.x,hud.getStatsCard().pos_card.y);
-            hud.getHUDFonts().getStatsFont().draw(hudbatch, tempState.getName(), hud.getStatsCard().pos_name.x, hud.getStatsCard().pos_name.y);
+            hud.getHUDFonts().getStatNameFont().draw(hudbatch, tempState.getName(), hud.getStatsCard().pos_name.x, hud.getStatsCard().pos_name.y);
             hud.getHUDFonts().getStatsFont().draw(hudbatch, "Strength: " + tempState.getStrength(), hud.getStatsCard().pos_str.x, hud.getStatsCard().pos_str.y);
             hud.getHUDFonts().getStatsFont().draw(hudbatch, "Endurance: " + tempState.getEndurance(), hud.getStatsCard().pos_end.x, hud.getStatsCard().pos_end.y);
             hud.getHUDFonts().getStatsFont().draw(hudbatch, "Intelligence: " + tempState.getIntelligence(), hud.getStatsCard().pos_int.x, hud.getStatsCard().pos_int.y);
@@ -102,14 +120,13 @@ public class SceneOverWorld implements Screen{
             hud.getHUDFonts().getStatsFont().draw(hudbatch, tempState.getWallet().getWalletAmount(), hud.getStatsCard().pos_mny.x, hud.getStatsCard().pos_mny.y);
         }
 
-        if(hud.getClock() != null){
-            hud.getHUDFonts().getClockFont().draw(hudbatch,hud.getClock().getCurrentTime(),hud.getClock().getPosition().x,hud.getClock().getPosition().y);
-            hud.getHUDFonts().getClockFont().draw(hudbatch,hud.getClock().getTimeOfDay(),hud.getClock().getPosition().x + 75,hud.getClock().getPosition().y);
-
-            hud.getHUDFonts().getClockFont().draw(hudbatch,hud.getClock().getMonthName(),hud.getClock().getPosition().x,hud.getClock().getPosition().y+12);
-            hud.getHUDFonts().getClockFont().draw(hudbatch,hud.getClock().getDay() + "" ,hud.getClock().getPosition().x + 45,hud.getClock().getPosition().y+12);
-            hud.getHUDFonts().getClockFont().draw(hudbatch,hud.getClock().getDayOfWeek(),hud.getClock().getPosition().x + 75,hud.getClock().getPosition().y+12);
-
+        //DRAW PAUSE MENU
+        if(hud.getPauseCard().canShow()){
+            hudbatch.draw(hud.getPauseCard().getGreyedOut(), 0,0);
+            hudbatch.draw(hud.getPauseCard().getMainMenu(),hud.getPauseCard().getMainMenu().getX(),hud.getPauseCard().getMainMenu().getY());
+            hudbatch.draw(hud.getPauseCard().getOptions(),hud.getPauseCard().getOptions().getX(),hud.getPauseCard().getOptions().getY());
+            hudbatch.draw(hud.getPauseCard().getSave(),hud.getPauseCard().getSave().getX(),hud.getPauseCard().getSave().getY());
+            hudbatch.draw(hud.getPauseCard().getHighlight(),hud.getPauseCard().getHighlight().getX(),hud.getPauseCard().getHighlight().getY());
         }
 
         hudbatch.end();
