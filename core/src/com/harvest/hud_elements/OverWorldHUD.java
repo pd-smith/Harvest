@@ -20,6 +20,7 @@ public class OverWorldHUD{
     DayCycle dayCycleClock;
     int updateCount;
     HUDFonts fonts;
+    StatsCard statsCard;
 
 
     public OverWorldHUD(GameDriver game){
@@ -30,6 +31,7 @@ public class OverWorldHUD{
         updateCount = 0;
         hideStats = true;
         fonts = new HUDFonts();
+        statsCard = new StatsCard();
     }
 
     public void addElement(Sprite sprite){
@@ -46,13 +48,6 @@ public class OverWorldHUD{
         Sprite sprite = new Sprite(new Texture(Gdx.files.internal("hud_top_right.png")));
         sprite.setX(game.GAME_WIDTH - sprite.getWidth());
         sprite.setY(0);
-        hudElements.add(sprite);
-
-        sprite = new Sprite(new Texture(Gdx.files.internal("Stats_HUD.png")));
-        sprite.setX(200);
-        sprite.setY(100); //change with Constants later
-
-
         hudElements.add(sprite);
    }
 
@@ -73,6 +68,10 @@ public class OverWorldHUD{
 
     public HUDFonts getHUDFonts(){
         return fonts;
+    }
+
+    public StatsCard getStatsCard(){
+        return statsCard;
     }
 
 

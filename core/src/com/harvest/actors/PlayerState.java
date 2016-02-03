@@ -10,9 +10,6 @@ public class PlayerState {
     //Wrapper class for all important player information
     int maxCarry, maxFatigue, curFatigue, strength, endurance, intelligence, charm;
     String name;
-
-    Vector2 position;
-
     Inventory inventory;
     Wallet wallet;
 
@@ -31,8 +28,6 @@ public class PlayerState {
 
         inventory = new Inventory(this);
         wallet = new Wallet(PlayerVars.STARTING_MONEY_DOLLARS * PlayerVars.CASH_VALUE);
-
-        position = new Vector2(210,585); // just guessing until i get the correct place. Replace
     }
 
     /**
@@ -126,9 +121,5 @@ public class PlayerState {
 
     public Wallet getWallet(){
         return wallet;
-    }
-
-    public Vector2 getPosition(){
-        return position;
     }
 }

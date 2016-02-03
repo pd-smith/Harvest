@@ -31,10 +31,8 @@ public class SceneOverWorld implements Screen{
     GameDriver _game;
     Stage stage;
     PlayerOverWorld player;
-    Image background;
     Sound bgMusic;
     public World world;
-    Box2DDebugRenderer debugRenderer;
     Map map;
     HUDFonts fonts; // maybe put this a little higher up
 
@@ -48,7 +46,8 @@ public class SceneOverWorld implements Screen{
         Gdx.input.setInputProcessor(stage);
 
         map = new Map("housemap.tmx",new int[]{0},new int[]{1},new int[]{2});
-        player = new PlayerOverWorld(this, map);
+        hud = new OverWorldHUD(game);
+        player = new PlayerOverWorld(this, map, hud);
         //stage.addActor(new Rock(this));
         player.setX(512f); // multiple of tile width-1
         player.setY(1200f);
@@ -57,12 +56,6 @@ public class SceneOverWorld implements Screen{
         bgMusic = Gdx.audio.newSound(Gdx.files.internal("04-spring-theme.mp3"));
         //bgMusic.play(.5f);
         //bgMusic.loop(.5f);
-
-        hud = new OverWorldHUD(game);
-
-
-
-
 
     }
 
@@ -98,17 +91,16 @@ public class SceneOverWorld implements Screen{
             hudbatch.draw(sprite,sprite.getX(),sprite.getY());
         }
 
-        //replace afterw
-
         PlayerState tempState = player.getPlayerState();
-        float xPad = 100, yPad = -50;
-        hud.getHUDFonts().getStatsFont().draw(hudbatch, tempState.getName(),tempState.getPosition().x + xPad,tempState.getPosition().y);
-        hud.getHUDFonts().getStatsFont().draw(hudbatch, "Strength: " + tempState.getStrength(), tempState.getPosition().x,tempState.getPosition().y + yPad);
-        hud.getHUDFonts().getStatsFont().draw(hudbatch, "Endurance: " + tempState.getEndurance(), tempState.getPosition().x,tempState.getPosition().y + yPad*2);
-        hud.getHUDFonts().getStatsFont().draw(hudbatch, "Intelligence: " + tempState.getIntelligence(), tempState.getPosition().x ,tempState.getPosition().y + yPad*3);
-        hud.getHUDFonts().getStatsFont().draw(hudbatch, "Charm: " + tempState.getCharm(), tempState.getPosition().x,tempState.getPosition().y + yPad*4);
-        hud.getHUDFonts().getStatsFont().draw(hudbatch, tempState.getWallet().getWalletAmount(), tempState.getPosition().x + xPad,tempState.getPosition().y + yPad*6);
-
+        if(hud.getStatsCard().canShow()) {
+            hudbatch.draw(hud.getStatsCard().getCard(), hud.getStatsCard().pos_card.x,hud.getStatsCard().pos_card.y);
+            hud.getHUDFonts().getStatsFont().draw(hudbatch, tempState.getName(), hud.getStatsCard().pos_name.x, hud.getStatsCard().pos_name.y);
+            hud.getHUDFonts().getStatsFont().draw(hudbatch, "Strength: " + tempState.getStrength(), hud.getStatsCard().pos_str.x, hud.getStatsCard().pos_str.y);
+            hud.getHUDFonts().getStatsFont().draw(hudbatch, "Endurance: " + tempState.getEndurance(), hud.getStatsCard().pos_end.x, hud.getStatsCard().pos_end.y);
+            hud.getHUDFonts().getStatsFont().draw(hudbatch, "Intelligence: " + tempState.getIntelligence(), hud.getStatsCard().pos_int.x, hud.getStatsCard().pos_int.y);
+            hud.getHUDFonts().getStatsFont().draw(hudbatch, "Charm: " + tempState.getCharm(), hud.getStatsCard().pos_chm.x, hud.getStatsCard().pos_chm.y);
+            hud.getHUDFonts().getStatsFont().draw(hudbatch, tempState.getWallet().getWalletAmount(), hud.getStatsCard().pos_mny.x, hud.getStatsCard().pos_mny.y);
+        }
 
         if(hud.getClock() != null){
             hud.getHUDFonts().getClockFont().draw(hudbatch,hud.getClock().getCurrentTime(),hud.getClock().getPosition().x,hud.getClock().getPosition().y);

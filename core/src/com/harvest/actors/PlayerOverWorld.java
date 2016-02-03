@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.harvest.environment.overworld.Map;
 import com.harvest.hud_elements.HUDVars;
+import com.harvest.hud_elements.OverWorldHUD;
 import com.harvest.input_listeners.PlayerOverWorldListener;
 import com.harvest.scenes.SceneOverWorld;
 
@@ -44,7 +45,7 @@ public class PlayerOverWorld extends Actor {
     PlayerState playerState;
 
 
-    public PlayerOverWorld(SceneOverWorld scene, Map currentMap){
+    public PlayerOverWorld(SceneOverWorld scene, Map currentMap, OverWorldHUD hud){
         isMoving = false;
         setUpAnimations();
         map = currentMap;
@@ -52,7 +53,7 @@ public class PlayerOverWorld extends Actor {
 
         setBounds(0,0,16,currentFrame.getRegionHeight());
         System.out.println(currentFrame.getRegionWidth() + " " + currentFrame.getRegionHeight());
-        addListener(new PlayerOverWorldListener(this));
+        addListener(new PlayerOverWorldListener(this,hud));
         body = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
 
         playerState = new PlayerState("Someone");
