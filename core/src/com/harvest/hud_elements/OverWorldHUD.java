@@ -19,6 +19,7 @@ public class OverWorldHUD{
     boolean hideStats;
     DayCycle dayCycleClock;
     int updateCount;
+    HUDFonts fonts;
 
 
     public OverWorldHUD(GameDriver game){
@@ -28,6 +29,7 @@ public class OverWorldHUD{
         buildDefaultHUD();
         updateCount = 0;
         hideStats = true;
+        fonts = new HUDFonts();
     }
 
     public void addElement(Sprite sprite){
@@ -67,6 +69,10 @@ public class OverWorldHUD{
 
     public DayCycle getClock() {
         return dayCycleClock;
+    }
+
+    public HUDFonts getHUDFonts(){
+        return fonts;
     }
 
 

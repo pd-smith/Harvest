@@ -11,7 +11,6 @@ public class PlayerState {
     int maxCarry, maxFatigue, curFatigue, strength, endurance, intelligence, charm;
     String name;
 
-    BitmapFont font; //replace with more elegant solution later
     Vector2 position;
 
     Inventory inventory;
@@ -32,7 +31,6 @@ public class PlayerState {
 
         inventory = new Inventory(this);
         wallet = new Wallet(PlayerVars.STARTING_MONEY_DOLLARS * PlayerVars.CASH_VALUE);
-        font = new BitmapFont();
 
         position = new Vector2(210,585); // just guessing until i get the correct place. Replace
     }
@@ -128,10 +126,6 @@ public class PlayerState {
 
     public Wallet getWallet(){
         return wallet;
-    }
-
-    public BitmapFont getFont(){
-        return font;
     }
 
     public Vector2 getPosition(){

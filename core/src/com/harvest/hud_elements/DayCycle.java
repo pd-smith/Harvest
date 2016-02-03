@@ -10,7 +10,6 @@ public class DayCycle {
 
     int hours, minutes, day, month, weekDayID;
     Vector2 position;
-    BitmapFont font;
 
     public DayCycle(){
         hours = 12;
@@ -19,7 +18,6 @@ public class DayCycle {
         day = 31;
         weekDayID = 0;
         position = new Vector2(900,25); //needs to be mathematical later on, not just 2 'random' numbers
-        font = new BitmapFont();
     }
 
     public DayCycle(int currentHours, int currentMinutes, int currentMonth, int currentDay, int currentDayOfWeek){
@@ -30,9 +28,6 @@ public class DayCycle {
         weekDayID = currentDayOfWeek;
         //weekday id should be 0-6. Going to put Sys err for invalid inputs next time
 
-
-        font = new BitmapFont();
-        font.getData().setScale(2);
     }
 
     public String getCurrentTime(){
@@ -55,10 +50,6 @@ public class DayCycle {
         }
 
         return timeOfDay + " " + hourString + ":" + minuteString;
-    }
-
-    public BitmapFont getFont(){
-        return font;
     }
 
     public Vector2 getPosition(){
