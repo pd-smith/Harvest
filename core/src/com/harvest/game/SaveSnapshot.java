@@ -4,7 +4,7 @@ package com.harvest.game;
  * Created by Patty on 2/5/2016.
  */
 public class SaveSnapshot {
-    int maxCarry, maxFatigue, curFatigue, strength, endurance, intelligence, charm;
+    int maxFatigue, curFatigue, strength, endurance, intelligence, charm;
     String name;
 
 
@@ -16,4 +16,23 @@ public class SaveSnapshot {
         return strength;
     }
 
+    public int getMaxFatigue(){
+        return maxFatigue;
+    }
+
+    public int getFatigue(){
+        return curFatigue;
+    }
+
+    public int getEndurance(){
+        return endurance;
+    }
+
+    public int getIntelligence(){
+        return intelligence;
+    }
+
+    public int getCharm() {
+        return charm;
+    }
 }

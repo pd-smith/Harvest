@@ -48,8 +48,13 @@ public class GameDriver extends Game {
 		Json json = new Json();
 		SaveSnapshot save = new SaveSnapshot();
 		//<add all values to snapshot that you want to save>
-		save.name = "Winston";
-		save.strength = 3;
+		save.name = player.getPlayerState().getName();
+		save.strength = player.getPlayerState().getStrength();
+		save.intelligence = player.getPlayerState().getIntelligence();
+		save.endurance = player.getPlayerState().getEndurance();
+		save.charm = player.getPlayerState().getCharm();
+		save.curFatigue = player.getPlayerState().getFatigue();
+		save.maxFatigue = player.getPlayerState().getMaxFatigue();
 		//</add all values to snapshot that you want to save>
 		System.out.println("Saving.....");
 		fileHandle.writeString(json.toJson(save), false);

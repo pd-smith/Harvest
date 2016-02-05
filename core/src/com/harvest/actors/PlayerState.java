@@ -98,6 +98,9 @@ public class PlayerState {
         return true;
     }
 
+    public int getMaxFatigue() {
+        return maxFatigue;
+    }
 
     public int getFatigue(){
         return curFatigue;
@@ -130,6 +133,11 @@ public class PlayerState {
     public void loadState(SaveSnapshot snap){
         this.name = snap.getName();
         this.strength = snap.getStrength();
+        this.curFatigue = snap.getFatigue();
+        this.maxFatigue = snap.getMaxFatigue();
+        this.intelligence = snap.getIntelligence();
+        this.endurance = snap.getEndurance();
+        this.charm = snap.getCharm();
     }
 
 }
