@@ -14,4 +14,14 @@ public class PlayerVars {
     public static final int STAT_MAX_VALUE = 99;
 
     public static final int CASH_VALUE = 100;
+
+    //INCOMPLETE LIST
+    public static final String NAME_SAVE = "Name_save";
+    public static final String STRENGTH_SAVE = "Str_Save";
+    public static final String ENDURANCE_SAVE = "End_Save";
+    public static final String CHARM_SAVE = "Crm_Save";
+    public static final String INTELLIGENCE_SAVE = "Int_Save";
+    public static final String MAX_FATIGUE = "MaxF_Save";
+    public static final String CURRENT_FATIGUE = "CurF_Save";
+
 }
