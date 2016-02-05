@@ -51,7 +51,7 @@ public class PlayerOverWorld extends Actor {
         map = currentMap;
         WALK_AMOUNT = map.getCollisionLayer().getTileWidth()/2;
 
-        setBounds(0,0,16,currentFrame.getRegionHeight());
+        setBounds(0,0,currentFrame.getRegionWidth(),currentFrame.getRegionHeight());
         System.out.println(currentFrame.getRegionWidth() + " " + currentFrame.getRegionHeight());
         addListener(new PlayerOverWorldListener(this,hud));
         body = new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
@@ -214,7 +214,7 @@ public class PlayerOverWorld extends Actor {
     public boolean isBlockedNorth(){
         float increment = WALK_AMOUNT;
         //increment = getHeight() < increment ? getHeight() / 2 : increment / 2;
-        for(float step = 0; step <= getWidth()-getWidth()/4; step += increment)
+        for(float step = getWidth()/2; step <= getWidth()-getWidth()/4; step += increment)
             if(isCellBlocked(getX() + step, getY() + getWidth()))
                 return true;
         return false;
@@ -223,8 +223,8 @@ public class PlayerOverWorld extends Actor {
     public boolean isBlockedSouth(){
         float increment = WALK_AMOUNT;
         //increment = getWidth() < increment ? getWidth() / 2 : increment / 2;
-        for(float step = 0; step <= getWidth()-getWidth()/4; step += increment)
-            if(isCellBlocked(getX() + step, getY()))
+       for(float step = getWidth()/2; step <= getWidth()-getWidth()/4; step += increment)
+            if(isCellBlocked(getX() + step, getY() - increment))
                 return true;
         return false;
     }
@@ -232,7 +232,7 @@ public class PlayerOverWorld extends Actor {
     public boolean isBlockedWest(){
         float increment = WALK_AMOUNT;
         //increment = getWidth() < increment ? getWidth() / 2 : increment / 2;
-        for(float step = 0; step <= getHeight()/2; step += increment)
+        for(float step = 0; step <= getHeight()/4; step += increment)
             if(isCellBlocked(getX(), getY() + step))
                 return true;
         return false;
@@ -241,7 +241,7 @@ public class PlayerOverWorld extends Actor {
     public boolean isBlockedEast(){
         float increment = WALK_AMOUNT;
         //increment = getWidth() < increment ? getWidth() / 2 : increment / 2;
-        for(float step = 0; step <= getHeight()/2; step += increment)
+        for(float step = 0; step <= getHeight()/4; step += increment)
             if(isCellBlocked(getX() + getWidth(), getY() + step))
                 return true;
         return false;
