@@ -158,4 +158,8 @@ public class SceneOverWorld implements Screen{
     public void dispose() {
         bgMusic.dispose();
     }
+
+    public PlayerOverWorld getPlayer(){
+        return player;
+    }
 }

@@ -31,7 +31,7 @@ public class OverWorldHUD{
         hideStats = true;
         fonts = new HUDFonts();
         statsCard = new StatsCard();
-        pauseCard = new PauseCard();
+        pauseCard = new PauseCard(game);
     }
 
     public void addElement(Sprite sprite){

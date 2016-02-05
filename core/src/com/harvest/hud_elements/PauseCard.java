@@ -3,6 +3,7 @@ package com.harvest.hud_elements;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.harvest.game.GameDriver;
 
 /**
  * Created by Patty on 2/3/2016.
@@ -11,12 +12,14 @@ public class PauseCard {
     final int TOTAL_OPTIONS = 3, MAIN_MENU_INDEX = 0, OPTIONS_INDEX = 1, SAVE_INDEX = 2;
 
     Texture greyedOut;
+    GameDriver game;
     int index;
     boolean show;
     Sprite main_menu, options, save, highlight;
 
-    public PauseCard(){
+    public PauseCard(GameDriver game){
         int paddingY = 10;
+        this.game = game;
         index = 0;
         greyedOut = new Texture(Gdx.files.internal(HUDVars.PAUSE_GREY_PATH));
         main_menu = new Sprite(new Texture(Gdx.files.internal(HUDVars.PAUSE_ITEM_MAIN_MENU_PATH)));
@@ -81,12 +84,14 @@ public class PauseCard {
     public void onSelect(){
         switch(index){
             case MAIN_MENU_INDEX:
-                System.out.println("Prompt if you want to save, then go to main menu");
+                //System.out.println("Prompt if you want to save, then go to main menu");
+                game.loadGame();
                 break;
             case OPTIONS_INDEX:
                 System.out.println("Go to Options Menu.");
                 break;
             case SAVE_INDEX:
+                game.saveGame();
                 System.out.println("Go to Save Function.");
                 break;
         }

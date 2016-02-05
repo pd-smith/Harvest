@@ -2,6 +2,10 @@ package com.harvest.actors;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
+import com.harvest.game.GameVars;
+import com.harvest.game.SaveSnapshot;
 
 /**
  * Created by Patty on 2/1/2016.
@@ -122,4 +126,10 @@ public class PlayerState {
     public Wallet getWallet(){
         return wallet;
     }
+
+    public void loadState(SaveSnapshot snap){
+        this.name = snap.getName();
+        this.strength = snap.getStrength();
+    }
+
 }

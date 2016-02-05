@@ -2,23 +2,25 @@ package com.harvest.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.harvest.actors.PlayerOverWorld;
+import com.harvest.actors.PlayerState;
 import com.harvest.scenes.SceneOverWorld;
 
 public class GameDriver extends Game {
-	SpriteBatch batch;
 	SceneOverWorld menu;
-	Texture img;
 	public OrthographicCamera cam;
 
 
 	public final float GAME_WIDTH = 1280;
 	public final float GAME_HEIGHT = 720;
-
+	PlayerOverWorld player;
 	public Viewport viewport;
 	
 	@Override
@@ -33,12 +35,34 @@ public class GameDriver extends Game {
 
 		cam.position.set(GAME_WIDTH/2,GAME_HEIGHT/2,0);
 		menu = new SceneOverWorld(this);
-
-
 		setMainMenu();
+		player = menu.getPlayer();
 	}
 
 	public void setMainMenu(){
 		setScreen(menu);
+	}
+
+	public void saveGame(){
+		FileHandle fileHandle = Gdx.files.local(GameVars.SAVE_FILE_PATH);
+		Json json = new Json();
+		SaveSnapshot save = new SaveSnapshot();
+		//<add all values to snapshot that you want to save>
+		save.name = "Winston";
+		save.strength = 3;
+		//</add all values to snapshot that you want to save>
+		System.out.println("Saving.....");
+		fileHandle.writeString(json.toJson(save), false);
+		System.out.println("Save Complete!");
+
+	}
+
+	public void loadGame(){
+		FileHandle fileHandle = Gdx.files.local(GameVars.SAVE_FILE_PATH);
+		System.out.println("Loading....");
+		Json json = new Json();
+		String output = fileHandle.readString();
+		player.getPlayerState().loadState(json.fromJson(SaveSnapshot.class,output));
+		System.out.println("Load Complete!");
 	}
 }
