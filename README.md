@@ -9,6 +9,18 @@ Harvest Moon clone using libGDX
 - Navigate to Application->DesktopLauncher
 - Under Configuration change the 'Working Directory' to <your path>/Harvest/core/assets
 
+
+## TO DO
+- Fix Collision (DONE)
+- Save Functions
+- Inventory - Weight System
+- Next Area Collider
+- 'Test' interactions
+- MOVEMENT FOR ALDEN
+
+
+HIT->FadeToBlack->Load Next TileMap-> FadetoMap
+
 ## RoadMap
 
 ### Gameplay
