@@ -42,6 +42,8 @@ public class PlayerOverWorldListener implements InputProcessor, EventListener{
                         movingSouth = false;
                         movingNorth = false;
                     }
+                }else{
+                    _player.getPlayerState().getInventory().indexPrevious();
                 }
                 break;
             case Input.Keys.RIGHT:
@@ -54,6 +56,8 @@ public class PlayerOverWorldListener implements InputProcessor, EventListener{
                         movingSouth = false;
                         movingNorth = false;
                     }
+                }else{
+                    _player.getPlayerState().getInventory().indexNext();
                 }
                 break;
             case Input.Keys.UP:
@@ -68,6 +72,8 @@ public class PlayerOverWorldListener implements InputProcessor, EventListener{
                     }else{
                         _hud.getPauseCard().moveOptionsUp();
                     }
+                }else{
+                    _player.getPlayerState().getInventory().indexJumpUp();
                 }
                 break;
             case Input.Keys.DOWN:
@@ -82,6 +88,8 @@ public class PlayerOverWorldListener implements InputProcessor, EventListener{
                     }else{
                         _hud.getPauseCard().moveOptionDown();
                     }
+                }else{
+                    _player.getPlayerState().getInventory().indexJumpDown();
                 }
                 break;
             case Input.Keys.ENTER:

@@ -120,12 +120,17 @@ public class SceneOverWorld implements Screen{
             hud.getHUDFonts().getStatsFont().draw(hudbatch, "Intelligence: " + tempState.getIntelligence(), hud.getStatsCard().pos_int.x, hud.getStatsCard().pos_int.y);
             hud.getHUDFonts().getStatsFont().draw(hudbatch, "Charm: " + tempState.getCharm(), hud.getStatsCard().pos_chm.x, hud.getStatsCard().pos_chm.y);
             hud.getHUDFonts().getStatsFont().draw(hudbatch, tempState.getWallet().getWalletAmount(), hud.getStatsCard().pos_mny.x, hud.getStatsCard().pos_mny.y);
+
             float pathag= (HUDVars.INVENTORY_ITEM_BACKGROUND_SIZE- HUDVars.INVENTORY_ITEM_SIZE)/2;
             int itemIndex = 0;
             for(InventoryItem item: tempState.getInventory().getList()){
                 hudbatch.draw(item.getBackground(), HUDVars.INVENTORY_START_X + (itemIndex%HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_X)),HUDVars.INVENTORY_START_Y - (itemIndex/HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_Y)),HUDVars.INVENTORY_ITEM_BACKGROUND_SIZE, HUDVars.INVENTORY_ITEM_BACKGROUND_SIZE);
                 hudbatch.draw(item.getSprite(), HUDVars.INVENTORY_START_X + pathag + (itemIndex%HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_X)),HUDVars.INVENTORY_START_Y + pathag - (itemIndex/HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_Y)),HUDVars.INVENTORY_ITEM_SIZE, HUDVars.INVENTORY_ITEM_SIZE);
-                itemIndex ++;
+                if(itemIndex == tempState.getInventory().getItemIndex()){
+                    hudbatch.draw(item.getHighlight(), HUDVars.INVENTORY_START_X + (itemIndex%HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_X)),HUDVars.INVENTORY_START_Y - (itemIndex/HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_Y)),HUDVars.INVENTORY_ITEM_BACKGROUND_SIZE, HUDVars.INVENTORY_ITEM_BACKGROUND_SIZE);
+
+                }
+                itemIndex++;
             }
 
         }
