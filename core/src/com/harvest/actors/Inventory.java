@@ -57,7 +57,7 @@ public class Inventory {
     }
 
     public void indexJumpDown() {
-        if ((currentItemIndex + HUDVars.INVENTORY_ROW_SIZE) > list.size()) {
+        if ((currentItemIndex + HUDVars.INVENTORY_ROW_SIZE) > list.size()-1) {
             currentItemIndex = (currentItemIndex % HUDVars.INVENTORY_ROW_SIZE);
         } else {
             currentItemIndex = currentItemIndex + HUDVars.INVENTORY_ROW_SIZE;
