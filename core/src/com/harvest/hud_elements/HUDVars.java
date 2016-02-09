@@ -19,6 +19,18 @@ public class HUDVars {
 
     public static final String FONT_UI_PATH = "Fonts/press_start.ttf";
 
+    public static final String INVENTORY_BACKGROUND_PATH = "UI/Status/Item_Background.png";
+    public static final String INVENTORY_HIGHLIGHT_PATH = "UI/Status/Item_Highlight.png";
+
+    public static final int INVENTORY_START_X = 100;
+    public static final int INVENTORY_START_Y = 400;
+    public static final int INVENTORY_ROW_SIZE = 5;
+
+    public static final float INVENTORY_ITEM_SIZE = 75;
+    public static final float INVENTORY_ITEM_BACKGROUND_SIZE = 90;
+    public static final float INVENTORY_ITEM_PADDING_X = 30;
+    public static final float INVENTORY_ITEM_PADDING_Y = 30;
+
     public static final int CLOCK_UPDATE = 1;
     public static final int MORNING_START = 6;
     public static final int AFTERNOON_START = 11;

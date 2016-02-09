@@ -140,4 +140,8 @@ public class PlayerState {
         this.charm = snap.getCharm();
     }
 
+    public Inventory getInventory(){
+        return inventory;
+    }
+
 }

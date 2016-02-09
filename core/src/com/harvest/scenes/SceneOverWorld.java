@@ -12,11 +12,13 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.harvest.actors.InventoryItem;
 import com.harvest.actors.PlayerOverWorld;
 import com.harvest.actors.PlayerState;
 import com.harvest.environment.overworld.Map;
 import com.harvest.game.GameDriver;
 import com.harvest.hud_elements.HUDFonts;
+import com.harvest.hud_elements.HUDVars;
 import com.harvest.hud_elements.OverWorldHUD;
 import com.sun.jmx.snmp.SnmpPduRequestType;
 
@@ -118,6 +120,14 @@ public class SceneOverWorld implements Screen{
             hud.getHUDFonts().getStatsFont().draw(hudbatch, "Intelligence: " + tempState.getIntelligence(), hud.getStatsCard().pos_int.x, hud.getStatsCard().pos_int.y);
             hud.getHUDFonts().getStatsFont().draw(hudbatch, "Charm: " + tempState.getCharm(), hud.getStatsCard().pos_chm.x, hud.getStatsCard().pos_chm.y);
             hud.getHUDFonts().getStatsFont().draw(hudbatch, tempState.getWallet().getWalletAmount(), hud.getStatsCard().pos_mny.x, hud.getStatsCard().pos_mny.y);
+            float pathag= (HUDVars.INVENTORY_ITEM_BACKGROUND_SIZE- HUDVars.INVENTORY_ITEM_SIZE)/2;
+            int itemIndex = 0;
+            for(InventoryItem item: tempState.getInventory().getList()){
+                hudbatch.draw(item.getBackground(), HUDVars.INVENTORY_START_X + (itemIndex%HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_X)),HUDVars.INVENTORY_START_Y - (itemIndex/HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_Y)),HUDVars.INVENTORY_ITEM_BACKGROUND_SIZE, HUDVars.INVENTORY_ITEM_BACKGROUND_SIZE);
+                hudbatch.draw(item.getSprite(), HUDVars.INVENTORY_START_X + pathag + (itemIndex%HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_X)),HUDVars.INVENTORY_START_Y + pathag - (itemIndex/HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_Y)),HUDVars.INVENTORY_ITEM_SIZE, HUDVars.INVENTORY_ITEM_SIZE);
+                itemIndex ++;
+            }
+
         }
 
         //DRAW PAUSE MENU
