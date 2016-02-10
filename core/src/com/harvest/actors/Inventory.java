@@ -29,6 +29,12 @@ public class Inventory {
         addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
         addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
         addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
+        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
+        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
+        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
+        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
+        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
+        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
 
 
     }
@@ -46,10 +52,12 @@ public class Inventory {
     }
 
     public void indexJumpUp(){
-        if( currentItemIndex == 0){
-            currentItemIndex = list.size() - (list.size()%HUDVars.INVENTORY_ROW_SIZE);
-        }else if((currentItemIndex- HUDVars.INVENTORY_ROW_SIZE) < 0){
-            currentItemIndex = list.size() - (HUDVars.INVENTORY_ROW_SIZE % currentItemIndex) - 1;
+        if(currentItemIndex - HUDVars.INVENTORY_ROW_SIZE < 0){
+            int numCompletedRows = list.size()/HUDVars.INVENTORY_ROW_SIZE - 1;
+            currentItemIndex = currentItemIndex + (numCompletedRows * HUDVars.INVENTORY_ROW_SIZE);
+            if(currentItemIndex + HUDVars.INVENTORY_ROW_SIZE < list.size()){
+                currentItemIndex = currentItemIndex + HUDVars.INVENTORY_ROW_SIZE;
+            }
         }else{
             currentItemIndex = currentItemIndex- HUDVars.INVENTORY_ROW_SIZE;
         }
