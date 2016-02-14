@@ -11,10 +11,12 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.harvest.actors.PlayerOverWorld;
 import com.harvest.actors.PlayerState;
+import com.harvest.scenes.SceneBattle;
 import com.harvest.scenes.SceneOverWorld;
 
 public class GameDriver extends Game {
 	SceneOverWorld menu;
+	SceneBattle battle;
 	public OrthographicCamera cam;
 
 
@@ -35,12 +37,17 @@ public class GameDriver extends Game {
 
 		cam.position.set(GAME_WIDTH/2,GAME_HEIGHT/2,0);
 		menu = new SceneOverWorld(this);
-		setMainMenu();
+		battle = new SceneBattle(this);
+		setBattle();
 		player = menu.getPlayer();
 	}
 
 	public void setMainMenu(){
 		setScreen(menu);
+	}
+
+	public void setBattle(){
+		setScreen(battle);
 	}
 
 	public void saveGame(){
