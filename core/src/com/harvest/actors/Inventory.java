@@ -18,23 +18,17 @@ public class Inventory {
         list = new ArrayList<InventoryItem>();
         player = currentPlayer;
         currentItemIndex = 0;
-        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
-        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
-        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
-        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
-        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
-        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
-        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
-        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
-        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
-        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
-        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
-        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
-        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
-        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
-        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
-        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
-        addItem(new InventoryItem("Backpack", 2, 500,"Items/Backpack.png"));
+        addItem(new InventoryItem("Backpack", 1, 500,"Items/Backpack.png"));
+        addItem(new InventoryItem("Backpack1", 2, 500,"Items/Backpack.png"));
+        addItem(new InventoryItem("Backpack2", 3, 500,"Items/Backpack.png"));
+        addItem(new InventoryItem("Backpack3", 4, 500,"Items/Backpack.png"));
+        addItem(new InventoryItem("Backpack4", 5, 500,"Items/Backpack.png"));
+        addItem(new InventoryItem("Backpack5", 6, 500,"Items/Backpack.png"));
+        addItem(new InventoryItem("Backpack6", 7, 500,"Items/Backpack.png"));
+        addItem(new InventoryItem("Backpack7", 8, 500,"Items/Backpack.png"));
+        addItem(new InventoryItem("Backpack8", 9, 500,"Items/Backpack.png"));
+        addItem(new InventoryItem("Backpack9", 10, 500,"Items/Backpack.png"));
+
 
 
     }

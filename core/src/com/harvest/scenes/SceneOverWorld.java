@@ -92,10 +92,27 @@ public class SceneOverWorld implements Screen{
         hudbatch.begin();
 
         //DRAW TIME OF DAY TINT
-
         hudbatch.draw(hud.getClock().getTimeOfDayTint(), 0, 0);
 
         //DRAW CLOCK
+        drawClock();
+
+        //DRAW STATS CARD
+        if(hud.getStatsCard().canShow()) {
+            drawStats(player.getPlayerState());
+        }
+
+        //DRAW PAUSE MENU
+        if(hud.getPauseCard().canShow()){
+            drawPause();
+        }
+
+        hudbatch.end();
+        _game.cam.position.set(player.getX(),player.getY(),0);
+        _game.cam.update();
+    }
+
+    public void drawClock(){
         for(Sprite sprite: hud.getHudElements()){
             hudbatch.draw(sprite,sprite.getX(),sprite.getY());
         }
@@ -109,44 +126,43 @@ public class SceneOverWorld implements Screen{
             hud.getHUDFonts().getClockFont().draw(hudbatch,hud.getClock().getDayOfWeek(),hud.getClock().getPosition().x + 125,hud.getClock().getPosition().y+12);
 
         }
+    }
 
-        //DRAW STATS CARD
-        PlayerState tempState = player.getPlayerState();
-        if(hud.getStatsCard().canShow()) {
-            hudbatch.draw(hud.getStatsCard().getCard(), hud.getStatsCard().pos_card.x,hud.getStatsCard().pos_card.y);
-            hud.getHUDFonts().getStatNameFont().draw(hudbatch, tempState.getName(), hud.getStatsCard().pos_name.x, hud.getStatsCard().pos_name.y);
-            hud.getHUDFonts().getStatsFont().draw(hudbatch, "Strength: " + tempState.getStrength(), hud.getStatsCard().pos_str.x, hud.getStatsCard().pos_str.y);
-            hud.getHUDFonts().getStatsFont().draw(hudbatch, "Endurance: " + tempState.getEndurance(), hud.getStatsCard().pos_end.x, hud.getStatsCard().pos_end.y);
-            hud.getHUDFonts().getStatsFont().draw(hudbatch, "Intelligence: " + tempState.getIntelligence(), hud.getStatsCard().pos_int.x, hud.getStatsCard().pos_int.y);
-            hud.getHUDFonts().getStatsFont().draw(hudbatch, "Charm: " + tempState.getCharm(), hud.getStatsCard().pos_chm.x, hud.getStatsCard().pos_chm.y);
-            hud.getHUDFonts().getStatsFont().draw(hudbatch, tempState.getWallet().getWalletAmount(), hud.getStatsCard().pos_mny.x, hud.getStatsCard().pos_mny.y);
+    public void drawStats(PlayerState tempState){
+        //STATS
+        hudbatch.draw(hud.getStatsCard().getCard(), hud.getStatsCard().pos_card.x,hud.getStatsCard().pos_card.y);
+        hud.getHUDFonts().getStatNameFont().draw(hudbatch, tempState.getName(), hud.getStatsCard().pos_name.x, hud.getStatsCard().pos_name.y);
+        hud.getHUDFonts().getStatsFont().draw(hudbatch, "Strength: " + tempState.getStrength(), hud.getStatsCard().pos_str.x, hud.getStatsCard().pos_str.y);
+        hud.getHUDFonts().getStatsFont().draw(hudbatch, "Endurance: " + tempState.getEndurance(), hud.getStatsCard().pos_end.x, hud.getStatsCard().pos_end.y);
+        hud.getHUDFonts().getStatsFont().draw(hudbatch, "Intelligence: " + tempState.getIntelligence(), hud.getStatsCard().pos_int.x, hud.getStatsCard().pos_int.y);
+        hud.getHUDFonts().getStatsFont().draw(hudbatch, "Charm: " + tempState.getCharm(), hud.getStatsCard().pos_chm.x, hud.getStatsCard().pos_chm.y);
+        hud.getHUDFonts().getStatsFont().draw(hudbatch, tempState.getWallet().getWalletAmount(), hud.getStatsCard().pos_mny.x, hud.getStatsCard().pos_mny.y);
 
-            float pathag= (HUDVars.INVENTORY_ITEM_BACKGROUND_SIZE- HUDVars.INVENTORY_ITEM_SIZE)/2;
-            int itemIndex = 0;
-            for(InventoryItem item: tempState.getInventory().getList()){
-                hudbatch.draw(item.getBackground(), HUDVars.INVENTORY_START_X + (itemIndex%HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_X)),HUDVars.INVENTORY_START_Y - (itemIndex/HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_Y)),HUDVars.INVENTORY_ITEM_BACKGROUND_SIZE, HUDVars.INVENTORY_ITEM_BACKGROUND_SIZE);
-                hudbatch.draw(item.getSprite(), HUDVars.INVENTORY_START_X + pathag + (itemIndex%HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_X)),HUDVars.INVENTORY_START_Y + pathag - (itemIndex/HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_Y)),HUDVars.INVENTORY_ITEM_SIZE, HUDVars.INVENTORY_ITEM_SIZE);
-                if(itemIndex == tempState.getInventory().getItemIndex()){
-                    hudbatch.draw(item.getHighlight(), HUDVars.INVENTORY_START_X + (itemIndex%HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_X)),HUDVars.INVENTORY_START_Y - (itemIndex/HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_Y)),HUDVars.INVENTORY_ITEM_BACKGROUND_SIZE, HUDVars.INVENTORY_ITEM_BACKGROUND_SIZE);
-
-                }
-                itemIndex++;
+        //INVENTORY
+        float tempx = 900,tempy = 650;
+        float pathag= (HUDVars.INVENTORY_ITEM_BACKGROUND_SIZE- HUDVars.INVENTORY_ITEM_SIZE)/2;
+        int itemIndex = 0;
+        for(InventoryItem item: tempState.getInventory().getList()){
+            hudbatch.draw(item.getBackground(), HUDVars.INVENTORY_START_X + (itemIndex%HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_X)),HUDVars.INVENTORY_START_Y - (itemIndex/HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_Y)),HUDVars.INVENTORY_ITEM_BACKGROUND_SIZE, HUDVars.INVENTORY_ITEM_BACKGROUND_SIZE);
+            hudbatch.draw(item.getSprite(), HUDVars.INVENTORY_START_X + pathag + (itemIndex%HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_X)),HUDVars.INVENTORY_START_Y + pathag - (itemIndex/HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_Y)),HUDVars.INVENTORY_ITEM_SIZE, HUDVars.INVENTORY_ITEM_SIZE);
+            if(itemIndex == tempState.getInventory().getItemIndex()){
+                hudbatch.draw(item.getHighlight(), HUDVars.INVENTORY_START_X + (itemIndex%HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_X)),HUDVars.INVENTORY_START_Y - (itemIndex/HUDVars.INVENTORY_ROW_SIZE * (HUDVars.INVENTORY_ITEM_SIZE + HUDVars.INVENTORY_ITEM_PADDING_Y)),HUDVars.INVENTORY_ITEM_BACKGROUND_SIZE, HUDVars.INVENTORY_ITEM_BACKGROUND_SIZE);
+                hud.getHUDFonts().getStatsFont().draw(hudbatch,item.getName(),tempx + 100,tempy);
+                hud.getHUDFonts().getStatsFont().draw(hudbatch,item.getWeight()+"",tempx + 150,tempy - 350);
             }
-
+            itemIndex++;
         }
+        hud.getHUDFonts().getStatsFont().draw(hudbatch,"Name:",tempx,tempy);
+        hud.getHUDFonts().getStatsFont().draw(hudbatch,"Desc:",tempx,tempy-100);
+        hud.getHUDFonts().getStatsFont().draw(hudbatch,"Weight:",tempx,tempy-350);
+    }
 
-        //DRAW PAUSE MENU
-        if(hud.getPauseCard().canShow()){
-            hudbatch.draw(hud.getPauseCard().getGreyedOut(), 0,0);
-            hudbatch.draw(hud.getPauseCard().getMainMenu(),hud.getPauseCard().getMainMenu().getX(),hud.getPauseCard().getMainMenu().getY());
-            hudbatch.draw(hud.getPauseCard().getOptions(),hud.getPauseCard().getOptions().getX(),hud.getPauseCard().getOptions().getY());
-            hudbatch.draw(hud.getPauseCard().getSave(),hud.getPauseCard().getSave().getX(),hud.getPauseCard().getSave().getY());
-            hudbatch.draw(hud.getPauseCard().getHighlight(),hud.getPauseCard().getHighlight().getX(),hud.getPauseCard().getHighlight().getY());
-        }
-
-        hudbatch.end();
-        _game.cam.position.set(player.getX(),player.getY(),0);
-        _game.cam.update();
+    public void drawPause(){
+        hudbatch.draw(hud.getPauseCard().getGreyedOut(), 0,0);
+        hudbatch.draw(hud.getPauseCard().getMainMenu(),hud.getPauseCard().getMainMenu().getX(),hud.getPauseCard().getMainMenu().getY());
+        hudbatch.draw(hud.getPauseCard().getOptions(),hud.getPauseCard().getOptions().getX(),hud.getPauseCard().getOptions().getY());
+        hudbatch.draw(hud.getPauseCard().getSave(),hud.getPauseCard().getSave().getX(),hud.getPauseCard().getSave().getY());
+        hudbatch.draw(hud.getPauseCard().getHighlight(),hud.getPauseCard().getHighlight().getX(),hud.getPauseCard().getHighlight().getY());
     }
 
     @Override
