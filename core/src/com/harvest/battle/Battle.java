@@ -1,5 +1,8 @@
 package com.harvest.battle;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -8,9 +11,16 @@ import com.badlogic.gdx.math.Vector2;
 public class Battle {
 
     Party party;
+    Sprite background;
+    Sprite background2;
 
     public Battle(){
         party = new Party();
+        background = new Sprite(new Texture(Gdx.files.internal("Battle/Battle_Background.gif")));
+        background.setPosition(0,0);
+        background2 = new Sprite(new Texture(Gdx.files.internal("Battle/Battle_Background.gif")));
+        background.setPosition(-1280,0);
+
     }
 
     public Vector2 getPositionByDegrees(int degrees){
@@ -22,5 +32,24 @@ public class Battle {
 
     public Party getParty(){
         return party;
+    }
+
+    public Sprite getBackground(){
+        return background;
+    }
+    public Sprite getBackground2(){
+        return background2;
+    }
+
+    public void moveBackground(){
+        background.setX(background.getX()+20);
+        if(background.getX() >= 1280){
+            background.setX(-1280);
+        }
+        background2.setX(background2.getX()+20);
+        if(background2.getX() >= 1280){
+            background2.setX(-1280);
+        }
+
     }
 }

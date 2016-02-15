@@ -6,7 +6,7 @@ package com.harvest.battle;
 public class BattleVars {
 
     public static final float CENTER_X = 550;
-    public static final float CENTER_Y = 400;
+    public static final float CENTER_Y = 250;
     public static final float RADIUS_X = 300;
     public static final float RADIUS_Y = 30;
 
