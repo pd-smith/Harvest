@@ -45,8 +45,8 @@ public class SceneBattle implements Screen {
         battle.getParty().getEnemy().setSprite((degrees2));
         Vector2 posEnemy = battle.getPositionByDegrees((degrees2));
         Vector2 pos = battle.getPositionByDegrees(degrees);
-        degrees --;
-        degrees2 --;
+        degrees -= 1;
+        degrees2 -= 1;
         if(degrees > 360){
             degrees = 0;
         }
@@ -62,8 +62,8 @@ public class SceneBattle implements Screen {
         battle.getParty().getCharacter().getCurrentSprite().setPosition(pos.x,pos.y);
         battle.getParty().getEnemy().getCurrentSprite().setPosition(posEnemy.x,posEnemy.y);
         battle.moveBackground();
-        sizeDeductionChar = Math.abs(90 - degrees) - ((degrees/270)*((degrees%270)))*2;
-        sizeDeductionEnem = Math.abs(90 - degrees2) - ((degrees2/270)*((degrees2%270)))*2;
+        sizeDeductionChar = (Math.abs(90 - degrees) - ((degrees/270)*((degrees%270)))*2)/4;
+        sizeDeductionEnem = (Math.abs(90 - degrees2) - ((degrees2/270)*((degrees2%270)))*2)/4;
     }
 
     @Override

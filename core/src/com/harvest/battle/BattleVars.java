@@ -10,7 +10,7 @@ public class BattleVars {
     public static final float RADIUS_X = 300;
     public static final float RADIUS_Y = 10;
 
-    public static final float CHARACTER_SIZE = 100;
+    public static final float CHARACTER_SIZE = 150;
 
     public static final double PI = 3.14159265;
 

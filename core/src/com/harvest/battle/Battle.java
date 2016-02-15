@@ -42,12 +42,12 @@ public class Battle {
     }
 
     public void moveBackground(){
-        background.setX(background.getX()+20);
-        if(background.getX() >= 1280){
+        background.setX(background.getX()+3.55f);
+        if(background.getX() >= 1280 + 1280%3.55){
             background.setX(-1280);
         }
-        background2.setX(background2.getX()+20);
-        if(background2.getX() >= 1280){
+        background2.setX(background2.getX()+3.55f);
+        if(background2.getX() >= 1280 + 1280%3.55){
             background2.setX(-1280);
         }
 
