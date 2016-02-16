@@ -17,9 +17,9 @@ public class Battle {
     public Battle(){
         party = new Party();
         background = new Sprite(new Texture(Gdx.files.internal("Battle/Battle_Background.gif")));
-        background.setPosition(0,0);
+        background.setPosition(0 + 7,0);
         background2 = new Sprite(new Texture(Gdx.files.internal("Battle/Battle_Background.gif")));
-        background.setPosition(-1280,0);
+        background.setPosition(-1280+ 7,0);
 
     }
 
@@ -42,13 +42,13 @@ public class Battle {
     }
 
     public void moveBackground(){
-        background.setX(background.getX()+3.55f);
-        if(background.getX() >= 1280 + 1280%3.55){
-            background.setX(-1280);
+        background.setX(background.getX()+7f);
+        if(background.getX() >= 1280 - 1280%7f){
+            background.setX(-1280 + 7f);
         }
-        background2.setX(background2.getX()+3.55f);
-        if(background2.getX() >= 1280 + 1280%3.55){
-            background2.setX(-1280);
+        background2.setX(background2.getX()+7f);
+        if(background2.getX() >= 1280 - 1280%7f){
+            background2.setX(-1280 + 7f);
         }
 
     }

@@ -36,7 +36,7 @@ public class Character {
             }
 
         }else{
-            if(actual < 280){
+            if(actual < 270){
                 curSprite = back_left;
                 inFront = true;
                 return back_left;
