@@ -16,7 +16,7 @@ public class Party {
     }
 
     public void setPosition(Vector2 newPosition){
-        party.getCurrentSprite().setPosition(newPosition.x, newPosition.y);
+        party.setPos(newPosition);
     }
 
     public Character getCharacter(){

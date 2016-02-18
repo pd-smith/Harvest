@@ -8,7 +8,6 @@ import java.util.ArrayList;
  * Created by Patty on 2/1/2016.
  */
 public class Inventory {
-
     ArrayList<InventoryItem> list;
     int currentItemIndex;
     PlayerState player;

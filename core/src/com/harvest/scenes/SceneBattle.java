@@ -48,8 +48,8 @@ public class SceneBattle implements Screen {
         battle.getParty().getEnemy().setSprite(battle.getEnemyDegrees());
         Vector2 posEnemy = battle.getPositionByDegrees(battle.getEnemyDegrees());
         Vector2 pos = battle.getPositionByDegrees(battle.getPartyDegrees());
-        battle.getParty().getCharacter().getCurrentSprite().setPosition(pos.x,pos.y);
-        battle.getParty().getEnemy().getCurrentSprite().setPosition(posEnemy.x,posEnemy.y);
+        battle.getParty().getCharacter().setPos(pos);
+        battle.getParty().getEnemy().setPos(posEnemy);
         battle.update();
     }
 
@@ -100,15 +100,15 @@ public class SceneBattle implements Screen {
 
     public void drawForeground(){
         if(battle.getParty().getCharacter().isForeground())
-            battleBatch.draw(battle.getParty().getCharacter().getCurrentSprite(),battle.getParty().getCharacter().getCurrentSprite().getX(),battle.getParty().getCharacter().getCurrentSprite().getY(), BattleVars.CHARACTER_SIZE + battle.getSize(battle.getPartyDegrees()),BattleVars.CHARACTER_SIZE + battle.getSize(battle.getPartyDegrees()));
+            battleBatch.draw(battle.getParty().getCharacter().getCurrentTexture(),battle.getParty().getCharacter().getPos().x,battle.getParty().getCharacter().getPos().y, BattleVars.CHARACTER_SIZE + battle.getSize(battle.getPartyDegrees()),BattleVars.CHARACTER_SIZE + battle.getSize(battle.getPartyDegrees()));
         if(battle.getParty().getEnemy().isForeground())
-            battleBatch.draw(battle.getParty().getEnemy().getCurrentSprite(),battle.getParty().getEnemy().getCurrentSprite().getX(),battle.getParty().getEnemy().getCurrentSprite().getY(),BattleVars.CHARACTER_SIZE + battle.getSize(battle.getEnemyDegrees()),BattleVars.CHARACTER_SIZE + battle.getSize(battle.getEnemyDegrees()));
+            battleBatch.draw(battle.getParty().getEnemy().getCurrentTexture(),battle.getParty().getEnemy().getPos().x,battle.getParty().getEnemy().getPos().y,BattleVars.CHARACTER_SIZE + battle.getSize(battle.getEnemyDegrees()),BattleVars.CHARACTER_SIZE + battle.getSize(battle.getEnemyDegrees()));
     }
 
     public void drawBackground() {
         if(!battle.getParty().getCharacter().isForeground())
-            battleBatch.draw(battle.getParty().getCharacter().getCurrentSprite(), battle.getParty().getCharacter().getCurrentSprite().getX(), battle.getParty().getCharacter().getCurrentSprite().getY(), BattleVars.CHARACTER_SIZE + battle.getSize(battle.getPartyDegrees()), BattleVars.CHARACTER_SIZE + battle.getSize(battle.getPartyDegrees()));
+            battleBatch.draw(battle.getParty().getCharacter().getCurrentTexture(), battle.getParty().getCharacter().getPos().x, battle.getParty().getCharacter().getPos().y, BattleVars.CHARACTER_SIZE + battle.getSize(battle.getPartyDegrees()), BattleVars.CHARACTER_SIZE + battle.getSize(battle.getPartyDegrees()));
         if(!battle.getParty().getEnemy().isForeground())
-            battleBatch.draw(battle.getParty().getEnemy().getCurrentSprite(), battle.getParty().getEnemy().getCurrentSprite().getX(), battle.getParty().getEnemy().getCurrentSprite().getY(), BattleVars.CHARACTER_SIZE + battle.getSize(battle.getEnemyDegrees()), BattleVars.CHARACTER_SIZE + battle.getSize(battle.getEnemyDegrees()));
+            battleBatch.draw(battle.getParty().getEnemy().getCurrentTexture(), battle.getParty().getEnemy().getPos().x, battle.getParty().getEnemy().getPos().y, BattleVars.CHARACTER_SIZE + battle.getSize(battle.getEnemyDegrees()), BattleVars.CHARACTER_SIZE + battle.getSize(battle.getEnemyDegrees()));
     }
 }
