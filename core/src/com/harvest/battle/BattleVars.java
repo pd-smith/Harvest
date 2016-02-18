@@ -14,4 +14,10 @@ public class BattleVars {
 
     public static final double PI = 3.14159265;
 
+    public static final int ROTATE_CLOCKWISE = 1;
+    public static final int ROTATE_COUNTER_CLOCKWISE = -1;
+    public static final int ROTATE_STOP = 0;
+
+    public static final int POSITION_PARTY = 310;
+
 }

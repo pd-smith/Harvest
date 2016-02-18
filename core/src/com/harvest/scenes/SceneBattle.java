@@ -23,7 +23,6 @@ public class SceneBattle implements Screen {
     Sound bgMusic;
     public World world;
     Battle battle;
-    int degrees = 0,degrees2 = 180, sizeDeductionChar = degrees - 180, sizeDeductionEnem = degrees2 - 180;
 
 
 
@@ -41,29 +40,13 @@ public class SceneBattle implements Screen {
     }
 
     public void update(){
-        battle.getParty().getCharacter().setSprite(degrees);
-        battle.getParty().getEnemy().setSprite((degrees2));
-        Vector2 posEnemy = battle.getPositionByDegrees((degrees2));
-        Vector2 pos = battle.getPositionByDegrees(degrees);
-        degrees -= 1;
-        degrees2 -= 1;
-        if(degrees > 360){
-            degrees = 0;
-        }
-        if(degrees < 0){
-            degrees = 360;
-        }
-        if(degrees2 > 360){
-            degrees2 = 0;
-        }
-        if(degrees2 < 0){
-            degrees2 = 360;
-        }
+        battle.getParty().getCharacter().setSprite(battle.getPartyDegrees());
+        battle.getParty().getEnemy().setSprite(battle.getEnemyDegrees());
+        Vector2 posEnemy = battle.getPositionByDegrees(battle.getEnemyDegrees());
+        Vector2 pos = battle.getPositionByDegrees(battle.getPartyDegrees());
         battle.getParty().getCharacter().getCurrentSprite().setPosition(pos.x,pos.y);
         battle.getParty().getEnemy().getCurrentSprite().setPosition(posEnemy.x,posEnemy.y);
-        battle.moveBackground();
-        sizeDeductionChar = (Math.abs(90 - degrees) - ((degrees/270)*((degrees%270)))*2)/4;
-        sizeDeductionEnem = (Math.abs(90 - degrees2) - ((degrees2/270)*((degrees2%270)))*2)/4;
+        battle.update();
     }
 
     @Override
@@ -113,15 +96,15 @@ public class SceneBattle implements Screen {
 
     public void drawForeground(){
         if(battle.getParty().getCharacter().isForeground())
-            battleBatch.draw(battle.getParty().getCharacter().getCurrentSprite(),battle.getParty().getCharacter().getCurrentSprite().getX(),battle.getParty().getCharacter().getCurrentSprite().getY(), BattleVars.CHARACTER_SIZE + sizeDeductionChar,BattleVars.CHARACTER_SIZE + sizeDeductionChar);
+            battleBatch.draw(battle.getParty().getCharacter().getCurrentSprite(),battle.getParty().getCharacter().getCurrentSprite().getX(),battle.getParty().getCharacter().getCurrentSprite().getY(), BattleVars.CHARACTER_SIZE + battle.getSize(battle.getPartyDegrees()),BattleVars.CHARACTER_SIZE + battle.getSize(battle.getPartyDegrees()));
         if(battle.getParty().getEnemy().isForeground())
-            battleBatch.draw(battle.getParty().getEnemy().getCurrentSprite(),battle.getParty().getEnemy().getCurrentSprite().getX(),battle.getParty().getEnemy().getCurrentSprite().getY(),BattleVars.CHARACTER_SIZE + sizeDeductionEnem,BattleVars.CHARACTER_SIZE + sizeDeductionEnem);
+            battleBatch.draw(battle.getParty().getEnemy().getCurrentSprite(),battle.getParty().getEnemy().getCurrentSprite().getX(),battle.getParty().getEnemy().getCurrentSprite().getY(),BattleVars.CHARACTER_SIZE + battle.getSize(battle.getEnemyDegrees()),BattleVars.CHARACTER_SIZE + battle.getSize(battle.getEnemyDegrees()));
     }
 
     public void drawBackground() {
         if(!battle.getParty().getCharacter().isForeground())
-            battleBatch.draw(battle.getParty().getCharacter().getCurrentSprite(), battle.getParty().getCharacter().getCurrentSprite().getX(), battle.getParty().getCharacter().getCurrentSprite().getY(), BattleVars.CHARACTER_SIZE + sizeDeductionChar, BattleVars.CHARACTER_SIZE + sizeDeductionChar);
+            battleBatch.draw(battle.getParty().getCharacter().getCurrentSprite(), battle.getParty().getCharacter().getCurrentSprite().getX(), battle.getParty().getCharacter().getCurrentSprite().getY(), BattleVars.CHARACTER_SIZE + battle.getSize(battle.getPartyDegrees()), BattleVars.CHARACTER_SIZE + battle.getSize(battle.getPartyDegrees()));
         if(!battle.getParty().getEnemy().isForeground())
-            battleBatch.draw(battle.getParty().getEnemy().getCurrentSprite(), battle.getParty().getEnemy().getCurrentSprite().getX(), battle.getParty().getEnemy().getCurrentSprite().getY(), BattleVars.CHARACTER_SIZE + sizeDeductionEnem, BattleVars.CHARACTER_SIZE + sizeDeductionEnem);
+            battleBatch.draw(battle.getParty().getEnemy().getCurrentSprite(), battle.getParty().getEnemy().getCurrentSprite().getX(), battle.getParty().getEnemy().getCurrentSprite().getY(), BattleVars.CHARACTER_SIZE + battle.getSize(battle.getEnemyDegrees()), BattleVars.CHARACTER_SIZE + battle.getSize(battle.getEnemyDegrees()));
     }
 }
