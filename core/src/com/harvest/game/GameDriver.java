@@ -11,12 +11,14 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.harvest.actors.PlayerOverWorld;
 import com.harvest.actors.PlayerState;
+import com.harvest.effects.Transition;
 import com.harvest.scenes.SceneBattle;
 import com.harvest.scenes.SceneOverWorld;
 
 public class GameDriver extends Game {
 	SceneOverWorld menu;
 	SceneBattle battle;
+	Transition transition;
 	public OrthographicCamera cam;
 
 
@@ -34,11 +36,12 @@ public class GameDriver extends Game {
 		cam = new OrthographicCamera();
 		viewport = new FitViewport(GAME_WIDTH * aspectRatio,GAME_HEIGHT * aspectRatio,cam);
 		viewport.apply();
-
+		transition = new Transition(this);
 		cam.position.set(GAME_WIDTH/2,GAME_HEIGHT/2,0);
-		menu = new SceneOverWorld(this);
 		battle = new SceneBattle(this);
-		setBattle();
+
+		menu = new SceneOverWorld(this);
+		setMainMenu();
 		player = menu.getPlayer();
 	}
 
@@ -47,6 +50,7 @@ public class GameDriver extends Game {
 	}
 
 	public void setBattle(){
+		battle.enterBattle();
 		setScreen(battle);
 	}
 
@@ -76,5 +80,9 @@ public class GameDriver extends Game {
 		String output = fileHandle.readString();
 		player.getPlayerState().loadState(json.fromJson(SaveSnapshot.class,output));
 		System.out.println("Load Complete!");
+	}
+
+	public Transition getTransition(){
+		return transition;
 	}
 }

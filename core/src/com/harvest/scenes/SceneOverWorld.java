@@ -22,6 +22,8 @@ import com.harvest.hud_elements.HUDVars;
 import com.harvest.hud_elements.OverWorldHUD;
 import com.sun.jmx.snmp.SnmpPduRequestType;
 
+import java.util.Random;
+
 
 /**
  * Created by Patty on 1/23/2016.
@@ -66,6 +68,11 @@ public class SceneOverWorld implements Screen{
     public void update(){
         if(!hud.getPauseCard().canShow()) {
             hud.update();
+        }
+        if(player.isMoving()) {
+            if (new Random().nextInt(10000) < 10) {
+                this.stage.getRoot().addAction(_game.getTransition().toBattle(this));
+            }
         }
     }
 

@@ -16,6 +16,8 @@ import com.harvest.hud_elements.OverWorldHUD;
 import com.harvest.input_listeners.PlayerOverWorldListener;
 import com.harvest.scenes.SceneOverWorld;
 
+import java.util.Random;
+
 /**
  * Created by Patty on 1/23/2016.
  */
@@ -245,6 +247,10 @@ public class PlayerOverWorld extends Actor {
             if(isCellBlocked(getX() + getWidth(), getY() + step))
                 return true;
         return false;
+    }
+
+    public boolean isMoving(){
+        return isMoving;
     }
 
     public PlayerState getPlayerState(){

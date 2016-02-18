@@ -34,9 +34,13 @@ public class SceneBattle implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         battle = new Battle();
+    }
+
+    public void enterBattle(){
         bgMusic = Gdx.audio.newSound(Gdx.files.internal("Audio/Music/battle.mp3"));
         bgMusic.play(.5f);
         bgMusic.loop(.5f);
+        battle.enterBattle();
     }
 
     public void update(){

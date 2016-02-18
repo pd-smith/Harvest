@@ -7,8 +7,8 @@ public class BattleVars {
 
     public static final float CENTER_X = 550;
     public static final float CENTER_Y = 200;
-    public static final float RADIUS_X = 300;
-    public static final float RADIUS_Y = 10;
+    public static final float RADIUS_X = 500;
+    public static final float RADIUS_Y = 15;
 
     public static final float CHARACTER_SIZE = 150;
 
@@ -18,6 +18,6 @@ public class BattleVars {
     public static final int ROTATE_COUNTER_CLOCKWISE = -1;
     public static final int ROTATE_STOP = 0;
 
-    public static final int POSITION_PARTY = 310;
+    public static final int POSITION_PARTY = 300;
 
 }

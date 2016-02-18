@@ -17,6 +17,11 @@ public class Battle {
     int partyDegrees, enemyDegrees, degreesToMove, movementDirection, currentDegrees;
 
     public Battle(){
+
+
+    }
+
+    public void enterBattle(){
         party = new Party();
         background = new Sprite(new Texture(Gdx.files.internal("Battle/Battle_Background.gif")));
         background.setPosition(0 + 7,0);
@@ -25,9 +30,9 @@ public class Battle {
         background2 = new Sprite(new Texture(Gdx.files.internal("Battle/Battle_Background.gif")));
         background.setPosition(-1280+ 7,0);
         movement = true;
-        currentDegrees = 180;
+        partyDegrees = 40;
+        enemyDegrees = (partyDegrees + 180)%360;
         moveToDegrees(BattleVars.POSITION_PARTY);
-
     }
 
     public Vector2 getPositionByDegrees(int degrees){
@@ -42,14 +47,15 @@ public class Battle {
     }
 
     private void moveToDegrees(int degrees){
-        int difference =degrees + currentDegrees;
-        int diffNorth = 360-degrees + currentDegrees;
+        int difference =Math.abs(degrees - partyDegrees);
+        int diffNorth = Math.abs(360-degrees - partyDegrees);
         int direction = BattleVars.ROTATE_CLOCKWISE;
         if(diffNorth < difference){
             direction = BattleVars.ROTATE_COUNTER_CLOCKWISE;
-            rotateDegrees(diffNorth,direction);
+            rotateDegrees((360-difference)%360,direction);
+            System.out.print(diffNorth);
         }else {
-            rotateDegrees(Math.abs(difference), direction);
+            rotateDegrees(difference%360, direction);
         }
     }
 
@@ -135,7 +141,7 @@ public class Battle {
     }
 
     public int getSize(int degrees){
-        return (Math.abs(90 - degrees) - ((degrees/270)*((degrees%270)))*2)/4;
+        return (Math.abs(90 - degrees) - ((degrees/270)*((degrees%270)))*2)/3;
     }
 
     public Party getParty(){
